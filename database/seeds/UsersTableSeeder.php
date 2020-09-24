@@ -21,12 +21,21 @@ class UsersTableSeeder extends Seeder
 		]);
 
 		App\User::create([
+	       'name' => 'petugas',
+	       'email' => 'petugas@gmail.com',
+	       'username' => 'petugas',
+	       'alamat' => 'gg muhajirin',
+	       'password' => bcrypt('secret'),
+	       'role_id' => 2
+		]);
+
+		App\User::create([
 	       'name' => 'user',
 	       'email' => 'user@gmail.com',
 	       'username' => 'user',
 	       'alamat' => 'gg panjunan',
 	       'password' => bcrypt('secret'),
-	       'role_id' => 2
+	       'role_id' => 3
 		]);
 
     }

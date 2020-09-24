@@ -1,5 +1,5 @@
  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: black">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <!-- <a href="index3.html" class="brand-link">
       <img src="{{URL::asset('tempAdmin')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -36,10 +36,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('create') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{ route('category') }}" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
               <p>
-                Create
+                Kategori
               </p>
             </a>
           </li>
