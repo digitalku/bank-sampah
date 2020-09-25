@@ -28,6 +28,9 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.css">
   
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
@@ -98,7 +101,9 @@
 <script src="{{URL::asset('tempAdmin')}}/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{URL::asset('tempAdmin')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- Select2 -->
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script src="{{URL::asset('tempAdmin')}}/plugins/select2/js/select2.full.min.js"></script>
+<!-- Toastr -->
+<script src="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.js"></script>
 <!-- page script -->
 <script>
   $(function () {

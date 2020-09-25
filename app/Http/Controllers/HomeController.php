@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Hash;
 use App\Kategori;
 use App\User;
 
@@ -26,9 +27,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $userrole = DB::table('users')
+                    ->whereNotIn('role_id', array(1))
+                    ->get();
         $roles = DB::table('roles')->get();
+        $role = DB::table('roles')->whereNotIn('id', array(1))
+                    ->get();
+        $setoran = DB::table('setoran')->get();
         $users = DB::table('users')->get();
-        return view('home', ['roles' => $roles], ['users' => $users]);
+        return view('home', ['users' => $users], ['userrole' => $userrole])->with(['roles' => $roles])->with(['setoran' => $setoran])->with(['role' => $role]);
+    }
+
+    public function lihatUser($id)
+    {   $setoran = DB::table('setoran')->where('penyetor', $id)->get();
+        $users = DB::table('users')->where('id', $id)->first();
+        return view('lihat-user', ['users' => $users], ['setoran' => $setoran]);
     }
 
     public function editUser($id)
@@ -57,7 +70,7 @@ class HomeController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => Hash::make($request->password)
         ]);
         // alihkan halaman edit ke halaman books
         return redirect('home')->with('status', 'Data User Berhasil DiUbah');
@@ -71,18 +84,22 @@ class HomeController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => Hash::make($request->password)
         ]);
 
-        return redirect('home');
+        return redirect('home')->with('status', 'Data User Berhasil Ditambahkan');
      
     }
 
     public function sampah()
     {
+        $userrole = DB::table('users')
+                    ->whereNotIn('role_id', array(1))
+                    ->get();
+        $users = DB::table('users')->get();
         $jenis = Kategori::all();
         $setoran = DB::table('setoran')->get();
-        return view('home', ['setoran' => $setoran], ['jenis' => $jenis]);
+        return view('sampah', ['setoran' => $setoran], ['jenis' => $jenis])->with(['userrole'=> $userrole])->with(['users' => $users]);
     }
 
     public function createData()
@@ -99,10 +116,11 @@ class HomeController extends Controller
             'jenis' => $request->jenis,
             'kiloan' => $request->kiloan,
             'pendapatan' => $request->pendapatan,
-            'tanggal_setor' => $request->tanggal_setor
+            'tanggal_setor' => $request->tanggal_setor,
+            'penyetor' => $request->penyetor
         ]);
 
-        return redirect('home');
+        return redirect('sampah')->with('status', 'Data Sampah Berhasil Ditambahkan');
      
     }
 

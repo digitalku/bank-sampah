@@ -26,18 +26,44 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-10">
-                <h3 class="card-title">DataTable with default features</h3>
+                <div class="col-6">
+                    @if (session('status'))
+                    <div class="alert alert-info alert-disabled fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                </div>
               </div>
+              @auth
+              @if(Auth::user()->role_id == "1")
               <div class="col-md-2">
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">
-                  Tambah Data
+                  Tambah User
                 </button>
               </div>
+              @elseif(Auth::user()->role_id == "2")
+              <div class="col-md-2">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">
+                  Tambah User
+                </button>
+              </div>
+              @else
+              <div class="col-md-2">
+                <h3>Your Trash</h3>
+              </div>
+              @endif
+              @endauth
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example1" class="table table-bordered table-hover">
+              
+              @auth
+              @if(Auth::user()->role_id == "1")
               <thead>
               <tr>
                 <th>Name</th>
@@ -46,6 +72,7 @@
                 <th>Action</th>
               </tr>
               </thead>
+
               @foreach($users as $user)
               <tr>
                 <td>{{ $user->name }}</td>
@@ -54,10 +81,57 @@
                 <td>
                     <a href="{{ route('users-edit', $user->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
                     <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                    <a href="{{ route('users-lihat', $user->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
                 </td>
               </tr>
               @endforeach
+              @elseif(Auth::user()->role_id == "2")
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Alamat</th>
+                <th>Username</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+
+              @foreach($userrole as $userrole)
+              <tr>
+                <td>{{ $userrole->name }}</td>
+                <td>{{ $userrole->alamat }}</td>
+                <td>{{ $userrole->username }}</td>
+                <td>
+                    <a href="{{ route('users-edit', $userrole->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                    <a href="{{ route('users-lihat', $userrole->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                </td>
+              </tr>
+              @endforeach
+              @else
+              <thead>
+              <tr>
+                <th>Jenis Sampah</th>
+                <th>Kiloan</th>
+                <th>Pendapatan</th>
+                <th>Tanggal Setor</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+
+              @foreach($setoran as $setor)
+              <tr>
+                <td>{{ $setor->jenis }}</td>
+                <td>{{ $setor->kiloan }} kg</td>
+                <td>{{ $setor->pendapatan }}</td>
+                <td>{{ $setor->tanggal_setor }}</td>
+                <td>
+                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                </td>
+              </tr>
+              @endforeach
+              @endif
+              @endauth
               </tbody>
             </table>
           </div>
@@ -102,9 +176,17 @@
               <label>Hak Akses Sebagai</label>
               <select name="role_id" class="form-control">
                 <option value="">Pilih</option>
+                @auth
+                @if(Auth::user()->role_id == "1")
                 @foreach($roles as $data)
                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                 @endforeach
+                @else
+                @foreach($role as $role)
+                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                @endforeach
+                @endif
+                @endauth
               </select>
             </div>
             <div class="form-group">
