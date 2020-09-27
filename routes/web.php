@@ -20,6 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/setor/edit/{id}', 'HomeController@editSetor')->name('setor-edit');
+Route::post('/setor/update', 'HomeController@updateSetor')->name('setor-update');
 Route::get('/sampah', 'HomeController@sampah')->name('sampah');
 Route::get('/users/lihat/{id}', 'HomeController@lihatUser')->name('users-lihat');
 Route::get('/users/edit/{id}', 'HomeController@editUser')->name('users-edit');
@@ -28,4 +30,5 @@ Route::post('/store-user', 'HomeController@storeUsers')->name('store-user');
 Route::get('/category', 'HomeController@createData')->name('category');
 Route::post('/store-category', 'HomeController@storeCategory')->name('store-category');
 Route::post('/store', 'HomeController@store')->name('store');
-Route::get('/edit', 'HomeController@editData')->name('edit');
+Route::get('/edit-category/{id}', 'HomeController@editCategory')->name('edit-category');
+Route::post('/category/update', 'HomeController@updateCategory')->name('category-update');

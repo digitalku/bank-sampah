@@ -44,4 +44,11 @@ class User extends Authenticatable
     public function hasPermission($permission) {
         return $this->role->permissions()->where('name', $permission)->first() ?: false;
     }
+
+    public function data()
+    {
+      // Setiap user akan memiliki banyak data
+      return $this->hasMany('App\Setoran','user_id');
+    }
+    
 }

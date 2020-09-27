@@ -64,7 +64,7 @@
                 <td>{{ $setor->pendapatan }}</td>
                 <td>{{ $setor->tanggal_setor }}</td>
                 <td>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
                     <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
                 </td>
               </tr>

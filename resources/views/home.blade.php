@@ -28,7 +28,7 @@
               <div class="col-md-10">
                 <div class="col-6">
                     @if (session('status'))
-                    <div class="alert alert-info alert-disabled fade show" role="alert">
+                    <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
                         {{ session('status') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -40,13 +40,13 @@
               @auth
               @if(Auth::user()->role_id == "1")
               <div class="col-md-2">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">
+                <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah User
                 </button>
               </div>
               @elseif(Auth::user()->role_id == "2")
               <div class="col-md-2">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">
+                <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah User
                 </button>
               </div>
@@ -74,16 +74,18 @@
               </thead>
 
               @foreach($users as $user)
+              <tbody>
               <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->alamat }}</td>
                 <td>{{ $user->username }}</td>
                 <td>
-                    <a href="{{ route('users-edit', $user->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                    <a href="{{ route('users-lihat', $user->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                    <a href="{{ route('users-edit', $user->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="#"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                    <a href="{{ route('users-lihat', $user->id)}}"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
                 </td>
               </tr>
+              </tbody>
               @endforeach
               @elseif(Auth::user()->role_id == "2")
               <thead>
@@ -96,16 +98,18 @@
               </thead>
 
               @foreach($userrole as $userrole)
+              <tbody>
               <tr>
                 <td>{{ $userrole->name }}</td>
                 <td>{{ $userrole->alamat }}</td>
                 <td>{{ $userrole->username }}</td>
                 <td>
-                    <a href="{{ route('users-edit', $userrole->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                    <a href="{{ route('users-lihat', $userrole->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                    <a href="{{ route('users-edit', $userrole->id)}}"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="#"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                    <a href="{{ route('users-lihat', $userrole->id)}}"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
                 </td>
               </tr>
+              </tbody>
               @endforeach
               @else
               <thead>
@@ -114,25 +118,21 @@
                 <th>Kiloan</th>
                 <th>Pendapatan</th>
                 <th>Tanggal Setor</th>
-                <th>Action</th>
               </tr>
               </thead>
 
-              @foreach($setoran as $setor)
+              @foreach($storeByUser as $sbu)
+              <tbody>
               <tr>
-                <td>{{ $setor->jenis }}</td>
-                <td>{{ $setor->kiloan }} kg</td>
-                <td>{{ $setor->pendapatan }}</td>
-                <td>{{ $setor->tanggal_setor }}</td>
-                <td>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                </td>
+                <td>{{ $sbu->jenis }}</td>
+                <td>{{ $sbu->kiloan }} kg</td>
+                <td>{{ $sbu->pendapatan }}</td>
+                <td>{{ $sbu->tanggal_setor }}</td>
               </tr>
+              </tbody>
               @endforeach
               @endif
               @endauth
-              </tbody>
             </table>
           </div>
           <!-- /.card-body -->
@@ -151,7 +151,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Large Modal</h4>
+        <h4 class="modal-title">Tambah User</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -201,7 +201,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success bg-icon">Submit</button>
           </div>
         </form>
       </div>

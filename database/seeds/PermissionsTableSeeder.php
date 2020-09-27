@@ -33,7 +33,7 @@ class PermissionsTableSeeder extends Seeder
 		$petugas = App\Role::where('name', 'petugas')->first();
 		$petugas->permissions()->attach([1, 2, 3, 4, 5])
 
-		$staff = App\Role::where('name', 'user')->first();
-		$staff->permissions()->attach([1]);
+		$user = App\Role::where('name', 'user')->first();
+		$user->permissions()->attach([1]);
     }
 }

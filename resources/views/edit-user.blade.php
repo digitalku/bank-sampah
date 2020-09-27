@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input name="password" type="password" class="form-control" id="password" value="{{ $users->password }}">
+              <input name="password" type="text" class="form-control" id="password" value="{{ $users->password }}">
             </div>
           </div>
           <!-- /.card-body -->

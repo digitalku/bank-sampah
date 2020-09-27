@@ -34,6 +34,25 @@
   
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <style type="text/css">
+    .bg-icon{
+      background-color: #039b4e;
+      border-color: #039b4e;
+    }
+    .bg-bhy{
+      background-color: #f21711;
+      border-color: #f21711;
+    }
+    .bg-inf{
+      background-color: #0099e5;
+      border-color: #0099e5;
+    }
+    .bg-wrning{
+      background-color: #ccaa00;
+      border-color: #ccaa00;
+      color: white;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

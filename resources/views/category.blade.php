@@ -20,7 +20,16 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-10">
-                <h3 class="card-title">DataTable with default features</h3>
+                <div class="col-6">
+                    @if (session('status'))
+                    <div class="alert alert-info alert-disabled fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                </div>
               </div>
               <div class="col-md-2">
                 <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#modal-lg">
@@ -48,7 +57,7 @@
                 <td>{{ $kategori->harga }} kg</td>
                 <td>{{ $kategori->tanggal_buat }}</td>
                 <td>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
+                    <a href="{{ route('edit-category', $kategori->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
                     <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
                 </td>
               </tr>

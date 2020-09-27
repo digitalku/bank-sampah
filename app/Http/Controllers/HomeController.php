@@ -7,6 +7,8 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Kategori;
 use App\User;
+use App\Setoran;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -27,30 +29,28 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $userrole = DB::table('users')
                     ->whereNotIn('role_id', array(1))
                     ->get();
         $roles = DB::table('roles')->get();
         $role = DB::table('roles')->whereNotIn('id', array(1))
                     ->get();
-        $setoran = DB::table('setoran')->get();
+        $store = Auth::user()->id;
+        $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
         $users = DB::table('users')->get();
-        return view('home', ['users' => $users], ['userrole' => $userrole])->with(['roles' => $roles])->with(['setoran' => $setoran])->with(['role' => $role]);
+        
+        return view('home', compact('storeByUser'))->with(['users' => $users])->with(['userrole' => $userrole])->with(['roles' => $roles])->with(['role' => $role])->with(['storeByUser' => $storeByUser]);
     }
 
     public function lihatUser($id)
-    {   $setoran = DB::table('setoran')->where('penyetor', $id)->get();
+    {   
+        $setoran = DB::table('setoran')->where('penyetor', $id)->get();
         $users = DB::table('users')->where('id', $id)->first();
         return view('lihat-user', ['users' => $users], ['setoran' => $setoran]);
     }
 
-    public function editUser($id)
-    {
     
-        $users = DB::table('users')->where('id',$id)->first();
-        $roles = DB::table('roles')->get();
-        return view('edit-user', ['roles' => $roles], ['users' => $users]);
-    }
 
     public function updateUsers(Request $request) 
     {
@@ -91,6 +91,14 @@ class HomeController extends Controller
      
     }
 
+    public function editUser($id)
+    {
+    
+        $users = DB::table('users')->where('id',$id)->first();
+        $roles = DB::table('roles')->get();
+        return view('edit-user', ['roles' => $roles], ['users' => $users]);
+    }
+
     public function sampah()
     {
         $userrole = DB::table('users')
@@ -102,12 +110,41 @@ class HomeController extends Controller
         return view('sampah', ['setoran' => $setoran], ['jenis' => $jenis])->with(['userrole'=> $userrole])->with(['users' => $users]);
     }
 
-    public function createData()
+    public function editSetor($id)
     {
-        $this->authorize('create data');
-        $category = Kategori::all();
-        return view('category', ['category' => $category]);
+        $userrole = DB::table('users')
+                    ->whereNotIn('role_id', array(1))
+                    ->get();
+        $users = DB::table('users')->get();
+        $setor = DB::table('setoran')->where('id',$id)->first();
+        $jenis = DB::table('kategori')->get();
+        return view('edit-sampah', ['jenis' => $jenis], ['setor' => $setor])->with(['userrole'=> $userrole])->with(['users' => $users]);
     }
+
+    public function updateSetor(Request $request) 
+    {
+        // untuk validasi form
+        $this->validate($request, [
+            'user_id' => 'required',
+            'jenis' => 'required',
+            'kiloan' => 'required',
+            'pendapatan' => 'nullable',
+            'tanggal_setor' => 'required',
+            'penyetor' => 'required'
+        ]);
+        // update data books
+        DB::table('setoran')->where('id', $request->id)->update([
+            'user_id' => $request ->user_id,
+            'jenis' => $request->jenis,
+            'kiloan' => $request->kiloan,
+            'pendapatan' => $request->pendapatan,
+            'tanggal_setor' => $request->tanggal_setor,
+            'penyetor' => $request->penyetor
+        ]);
+        // alihkan halaman edit ke halaman books
+        return redirect('sampah')->with('status', 'Data Sampah Berhasil DiUbah');
+    }
+
 
     public function store(Request $request)
     {
@@ -124,6 +161,14 @@ class HomeController extends Controller
      
     }
 
+    //kategori
+    public function createData()
+    {
+        $this->authorize('create data');
+        $category = Kategori::all();
+        return view('category', ['category' => $category]);
+    }
+
     public function storeCategory(Request $request)
     {
         DB::table('kategori')->insert([
@@ -136,10 +181,29 @@ class HomeController extends Controller
      
     }
 
-    public function editData()
+    public function editCategory($id)
     {
         $this->authorize('edit data');
 
-        return view('edit');
+        $category = DB::table('kategori')->where('id',$id)->first();
+        return view('edit-category', ['category' => $category]);
+    }
+
+    public function updateCategory(Request $request) 
+    {
+        // untuk validasi form
+        $this->validate($request, [
+            'jenis' => 'required',
+            'harga' => 'required',
+            'tanggal_buat' => 'required'
+        ]);
+        // update data books
+        DB::table('kategori')->where('id', $request->id)->update([
+            'jenis' => $request ->jenis,
+            'harga' => $request->harga,
+            'tanggal_buat' => $request->tanggal_buat
+        ]);
+        // alihkan halaman edit ke halaman books
+        return redirect('category')->with('status', 'Data Kategori Berhasil Diubah');
     }
 }
