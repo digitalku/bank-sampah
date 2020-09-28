@@ -46,11 +46,26 @@ class HomeController extends Controller
     public function lihatUser($id)
     {   
         $setoran = DB::table('setoran')->where('penyetor', $id)->get();
+        $setorann = DB::table('setoran')->where('penyetor', $id)->first();
         $users = DB::table('users')->where('id', $id)->first();
-        return view('lihat-user', ['users' => $users], ['setoran' => $setoran]);
+        $jenis = Kategori::all();
+        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann]);
     }
 
-    
+    public function storeWithUser(Request $request)
+    {
+        DB::table('setoran')->insert([
+            'user_id' => $request->user_id,
+            'jenis' => $request->jenis,
+            'kiloan' => $request->kiloan,
+            'pendapatan' => $request->pendapatan,
+            'tanggal_setor' => $request->tanggal_setor,
+            'penyetor' => $request->penyetor
+        ]);
+
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Ditambah');
+     
+    }
 
     public function updateUsers(Request $request) 
     {
@@ -97,6 +112,14 @@ class HomeController extends Controller
         $users = DB::table('users')->where('id',$id)->first();
         $roles = DB::table('roles')->get();
         return view('edit-user', ['roles' => $roles], ['users' => $users]);
+    }
+
+    public function deleteUser($id)
+    {
+
+        User::find($id)->delete();
+     
+        return redirect('home')->with('status', 'Data User Berhasil Dihapus');
     }
 
     public function sampah()
@@ -161,6 +184,21 @@ class HomeController extends Controller
      
     }
 
+   
+    public function deleteSetor($id)
+    {
+
+        Setoran::find($id)->delete();
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Dihapus');
+    }
+
+    public function deleteSetorUser($id)
+    {
+
+        Setoran::find($id)->delete();
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Dihapus');
+    }
+
     //kategori
     public function createData()
     {
@@ -205,5 +243,12 @@ class HomeController extends Controller
         ]);
         // alihkan halaman edit ke halaman books
         return redirect('category')->with('status', 'Data Kategori Berhasil Diubah');
+    }
+
+    public function deleteCategory($id)
+    {
+
+        Kategori::find($id)->delete();
+        return redirect()->back()->with('status', 'Data Kategori Berhasil Dihapus');
     }
 }

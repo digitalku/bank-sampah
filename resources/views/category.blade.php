@@ -22,7 +22,7 @@
               <div class="col-md-10">
                 <div class="col-6">
                     @if (session('status'))
-                    <div class="alert alert-info alert-disabled fade show" role="alert">
+                    <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
                         {{ session('status') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div class="col-md-2">
-                <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#modal-lg">
+                <button type="button" class="btn btn-block btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah Data
                 </button>
               </div>
@@ -57,8 +57,8 @@
                 <td>{{ $kategori->harga }} kg</td>
                 <td>{{ $kategori->tanggal_buat }}</td>
                 <td>
-                    <a href="{{ route('edit-category', $kategori->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                    <a href="{{ route('edit-category', $kategori->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
+                    <a href="delete-category/{{$kategori->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td>
               </tr>
               @endforeach
@@ -79,10 +79,21 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Large Modal</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/icon.png" height="50">
+            </div>
+            <div class="col-md-6">
+              <h4 class="modal-title">Tambah Kategori Sampah</h4>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
          <form action="{{ route('store-category') }}" role="form" method="post">

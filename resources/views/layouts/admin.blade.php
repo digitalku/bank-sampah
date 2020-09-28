@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" href="{{URL::asset('tempAdmin')}}/dist/img/icon.png">
   <title>Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,6 +149,31 @@
     })
 
   })
+</script>
+
+<script>
+  $('tr[data-href]').on("click", function() {
+      document.location = $(this).data('href');
+  });
+</script>
+
+<script src="{{URL::asset('js')}}/sweetalert.min.js"></script>
+<script>
+$('.delete-confirm').on('click', function (event) {
+    event.preventDefault();
+    const url = $(this).attr('href');
+    swal({
+        title: 'Apakah Kamu Yakin?',
+        text: 'Data yang Sudah di Hapus Tidak dapat dikembalikan lagi!',
+        icon: 'warning',
+        buttons: ["Batal", "Ya!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+        }
+    });
+});
+  
 </script>
 
 </body>

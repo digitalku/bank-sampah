@@ -5,11 +5,11 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Sampah</h1>
+        <h1 class="m-0 text-dark">Seluruh Sampah User</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
           <li class="breadcrumb-item active">Sampah</li>
         </ol>
       </div><!-- /.col -->
@@ -28,7 +28,7 @@
               <div class="col-md-10">
                 <div class="col-6">
                     @if (session('status'))
-                    <div class="alert alert-info alert-disabled fade show" role="alert">
+                    <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
                         {{ session('status') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -38,7 +38,7 @@
                 </div>
               </div>
               <div class="col-md-2">
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">
+                <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah Sampah
                 </button>
               </div>
@@ -64,8 +64,8 @@
                 <td>{{ $setor->pendapatan }}</td>
                 <td>{{ $setor->tanggal_setor }}</td>
                 <td>
-                    <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info " type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
+                    <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
+                    <a href="delete-setor/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td>
               </tr>
               @endforeach
@@ -87,10 +87,21 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Large Modal</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/icon.png" height="50">
+            </div>
+            <div class="col-md-4">
+              <h4 class="modal-title">Tambah Sampah</h4>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
          <form action="{{ route('store') }}" role="form" method="post">
@@ -133,7 +144,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success bg icon">Submit</button>
           </div>
         </form>
       </div>

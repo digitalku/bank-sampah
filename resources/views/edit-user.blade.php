@@ -66,7 +66,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-info">Update</button>
+            <button type="submit" class="btn btn-success bg-icon">Update</button>
           </div>
         </form>
           </div>

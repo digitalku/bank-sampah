@@ -80,9 +80,9 @@
                 <td>{{ $user->alamat }}</td>
                 <td>{{ $user->username }}</td>
                 <td>
-                    <a href="{{ route('users-edit', $user->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                    <a href="{{ route('users-lihat', $user->id)}}"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                    <a href="{{ route('users-edit', $user->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
+                    <a href="delete-user/{{$user->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
+                    <a href="{{ route('users-lihat', $user->id)}}"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>
                 </td>
               </tr>
               </tbody>
@@ -104,9 +104,9 @@
                 <td>{{ $userrole->alamat }}</td>
                 <td>{{ $userrole->username }}</td>
                 <td>
-                    <a href="{{ route('users-edit', $userrole->id)}}"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-edit"></i></span></button></a>
-                    <a href="#"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-trash"></i></span></button></a>
-                    <a href="{{ route('users-lihat', $userrole->id)}}"><button class="btn btn-xs btn-info bg-icon" type="button"><span class="btn-label"><i class="fa fa-eye"></i></span></button></a>
+                    <a href="{{ route('users-edit', $userrole->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
+                    <a href="delete-user/{{$userrole->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
+                    <a href="{{ route('users-lihat', $userrole->id)}}"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>
                 </td>
               </tr>
               </tbody>
@@ -151,10 +151,21 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Tambah User</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/icon.png" height="50">
+            </div>
+            <div class="col-md-4">
+              <h4 class="modal-title pl-5">Tambah User</h4>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
          <form action="{{ route('store-user') }}" role="form" method="post">
