@@ -153,13 +153,10 @@
       <div class="modal-header">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-4">
-              <img src="{{URL::asset('tempAdmin')}}/dist/img/icon.png" height="50">
+            <div class="col-md-6">
+              <h4 class="modal-title">Tambah User</h4>
             </div>
-            <div class="col-md-4">
-              <h4 class="modal-title pl-5">Tambah User</h4>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -173,11 +170,11 @@
           <div class="card-body">
             <div class="form-group">
               <label for="name">Nama</label>
-              <input name="name" type="text" class="form-control" id="name">
+              <input name="name" type="text" class="form-control" id="name" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="username">Username</label>
-              <input name="username" type="text" class="form-control" id="username">
+              <input name="username" type="text" class="form-control" id="username" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="alamat">Alamat</label>
@@ -202,11 +199,11 @@
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input name="email" type="email" class="form-control" id="email">
+              <input name="email" type="email" class="form-control" id="email" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input name="password" type="password" class="form-control" id="password">
+              <input name="password" type="password" class="form-control" id="password" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->

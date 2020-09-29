@@ -31,11 +31,11 @@
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
               <label for="name">Nama</label>
-              <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}">
+              <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="username">Username</label>
-              <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}">
+              <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="alamat">Alamat</label>
@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}">
+              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="password">Password</label>

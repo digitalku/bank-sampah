@@ -176,5 +176,7 @@ $('.delete-confirm').on('click', function (event) {
   
 </script>
 
+<!-- edit with modal -->
+
 </body>
 </html>
