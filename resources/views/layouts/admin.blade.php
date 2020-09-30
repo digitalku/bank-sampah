@@ -177,6 +177,36 @@ $('.delete-confirm').on('click', function (event) {
 </script>
 
 <!-- edit with modal -->
+<script>
+  $(document).on('ajaxComplete ready', function () {
+    $('.modalMd').off('click').on('click', function () {
+        $('#modalMdContent').load($(this).attr('value'));
+        $('#modalMdTitle').html($(this).attr('title'));
+    });
+});
+</script>
+
+ <script>
+    $(document).ready(function () {
+        $("#modal-sm").on("show.bs.modal", function (e) {
+            var id = $(e.relatedTarget).data('target-id');
+            var jenis = $(e.relatedTarget).data('target-jenis');
+            var kiloan = $(e.relatedTarget).data('target-kiloan');
+            var total = $(e.relatedTarget).data('target-total');
+            var userid = $(e.relatedTarget).data('target-userid');
+            var penyetor = $(e.relatedTarget).data('target-penyetor');
+            var tgl = $(e.relatedTarget).data('target-tgl');
+            $('#pass_id').val(id);
+            $('#jenis').val(jenis);
+            $('#kiloann').val(kiloan);
+            $('#total').val(total);
+            $('#user_id').val(userid);
+            $('#penyetorr').val(penyetor);
+            $('#tgl').val(tgl);
+        });
+    });
+
+</script>
 
 </body>
 </html>

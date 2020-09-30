@@ -24,6 +24,7 @@ Route::get('/setor/edit/{id}', 'HomeController@editSetor')->name('setor-edit');
 Route::post('/setor/update', 'HomeController@updateSetor')->name('setor-update');
 Route::get('/delete-setor/{id}', 'HomeController@deleteSetor')->name('delete-setor');
 Route::get('/users/lihat/delete-setoruser/{id}', 'HomeController@deleteSetorUser')->name('delete-setoruser');
+Route::post('/users/lihat/update', 'HomeController@updatePendapatan')->name('pendapatan-update');
 Route::get('/sampah', 'HomeController@sampah')->name('sampah');
 Route::get('/users/lihat/{id}', 'HomeController@lihatUser')->name('users-lihat');
 Route::get('/users/edit/{id}', 'HomeController@editUser')->name('users-edit');

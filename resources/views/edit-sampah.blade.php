@@ -34,10 +34,10 @@
                   <select name="jenis" class="form-control">
                     <option value="">Pilih Jenis Sampah</option>
                     @foreach($jenis as $data)
-                      @if($data->jenis == $setor->jenis)
-                      <option value="{{ $data->jenis }}" selected>{{ $data->jenis }}</option>
+                      @if($data->id == $setor->jenis)
+                      <option value="{{ $data->id }}" selected>{{ $data->jenis }}</option>
                       @else
-                      <option value="{{ $data->jenis }}">{{ $data->jenis }}</option>
+                      <option value="{{ $data->id }}">{{ $data->jenis }}</option>
                       @endif
                     @endforeach
                   </select>

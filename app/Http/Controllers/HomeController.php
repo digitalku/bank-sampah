@@ -34,7 +34,7 @@ class HomeController extends Controller
                     ->whereNotIn('role_id', array(1))
                     ->get();
         $roles = DB::table('roles')->get();
-        $role = DB::table('roles')->whereNotIn('id', array(1))
+        $role = DB::table('roles')->whereNotIn('id', array(1, 2))
                     ->get();
         $store = Auth::user()->id;
         $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
@@ -45,11 +45,44 @@ class HomeController extends Controller
 
     public function lihatUser($id)
     {   
-        $setoran = DB::table('setoran')->where('penyetor', $id)->get();
+        $setorani = DB::table('setoran')
+                    ->select(DB::raw("SUM(setoran.kiloan * kategori.harga) as total"),'setoran.*', 'kategori.*')
+                    ->leftJoin('kategori', 'kategori.id', 'setoran.jenis')
+                    ->where('penyetor', $id)
+                    ->groupBy("kategori.id")
+                    ->groupBy("setoran.id")
+                    ->get();
+        $setoran = DB::table('setoran')
+                    ->select('setoran.*', 'kategori.*')
+                    ->leftJoin('kategori', 'kategori.id', 'setoran.jenis')
+                    ->where('penyetor', $id)->get();
         $setorann = DB::table('setoran')->where('penyetor', $id)->first();
         $users = DB::table('users')->where('id', $id)->first();
         $jenis = Kategori::all();
-        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann]);
+        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['setorani' => $setorani]);
+    }
+
+
+    public function updatePendapatan(Request $request) 
+    {
+        $this->validate($request, [
+            'user_id' => 'required',
+            'jenis' => 'required',
+            'kiloan' => 'required',
+            'pendapatan' => 'nullable',
+            'tanggal_setor' => 'required',
+            'penyetor' => 'required'
+        ]);
+        
+        DB::table('setoran')->where('id', $request->id)->update([
+            'user_id' => $request ->user_id,
+            'jenis' => $request->jenis,
+            'kiloan' => $request->kiloan,
+            'pendapatan' => $request->pendapatan,
+            'tanggal_setor' => $request->tanggal_setor,
+            'penyetor' => $request->penyetor
+        ]);
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Ditotal');
     }
 
     public function storeWithUser(Request $request)
