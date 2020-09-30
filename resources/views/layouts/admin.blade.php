@@ -188,11 +188,11 @@ $('.delete-confirm').on('click', function (event) {
 
  <script>
     $(document).ready(function () {
-        $("#modal-sm").on("show.bs.modal", function (e) {
+        $("#modal-lgt").on("show.bs.modal", function (e) {
             var id = $(e.relatedTarget).data('target-id');
             var jenis = $(e.relatedTarget).data('target-jenis');
             var kiloan = $(e.relatedTarget).data('target-kiloan');
-            var total = $(e.relatedTarget).data('target-total');
+            var total = $(e.relatedTarget).data('target-pendapatan');
             var userid = $(e.relatedTarget).data('target-userid');
             var penyetor = $(e.relatedTarget).data('target-penyetor');
             var tgl = $(e.relatedTarget).data('target-tgl');
@@ -203,6 +203,25 @@ $('.delete-confirm').on('click', function (event) {
             $('#user_id').val(userid);
             $('#penyetorr').val(penyetor);
             $('#tgl').val(tgl);
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var elButtons = $("#datatables-sampah .hitung-pendapatan");
+        var elFormSetSetoran = $("#set-setoran");
+
+        if (!elButtons || !elFormSetSetoran) return;
+
+        elButtons.click(function() {
+          var id = $(this).closest("tr").data('id');
+          if (!id) return;
+
+          var elInputName = elFormSetSetoran.find("input[name='id']");
+          elInputName.val(id);
+          elFormSetSetoran.submit();
         });
     });
 

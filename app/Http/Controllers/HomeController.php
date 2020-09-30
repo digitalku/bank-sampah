@@ -46,20 +46,17 @@ class HomeController extends Controller
     public function lihatUser($id)
     {   
         $setorani = DB::table('setoran')
-                    ->select(DB::raw("SUM(setoran.kiloan * kategori.harga) as total"),'setoran.*', 'kategori.*')
-                    ->leftJoin('kategori', 'kategori.id', 'setoran.jenis')
-                    ->where('penyetor', $id)
-                    ->groupBy("kategori.id")
-                    ->groupBy("setoran.id")
-                    ->get();
-        $setoran = DB::table('setoran')
                     ->select('setoran.*', 'kategori.*')
                     ->leftJoin('kategori', 'kategori.id', 'setoran.jenis')
+                    ->where('setoran.penyetor', $id)
+                    ->get();
+        $setoran = DB::table('setoran')
                     ->where('penyetor', $id)->get();
         $setorann = DB::table('setoran')->where('penyetor', $id)->first();
         $users = DB::table('users')->where('id', $id)->first();
+        $usersi = DB::table('users')->get();
         $jenis = Kategori::all();
-        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['setorani' => $setorani]);
+        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani]);
     }
 
 
@@ -197,8 +194,56 @@ class HomeController extends Controller
             'tanggal_setor' => $request->tanggal_setor,
             'penyetor' => $request->penyetor
         ]);
-        // alihkan halaman edit ke halaman books
+        
         return redirect('sampah')->with('status', 'Data Sampah Berhasil DiUbah');
+    }
+
+    /**
+     * 
+     */
+    public function setSetoran(Request $request)
+    {
+        $sampah = DB::table('setoran')
+            ->where('id', $request->id)
+            ->select('jenis', 'kiloan', 'penyetor')
+            ->first();
+
+        $kategori = DB::table('kategori')
+            ->where('jenis', $sampah->jenis)
+            ->select('harga')
+            ->first();
+
+        $pendapatan = $kategori->harga * $sampah->kiloan;
+
+        DB::table('setoran')
+            ->where('id', $request->id)
+            ->update(['pendapatan' => $pendapatan]);
+
+        return redirect()->route("users-lihat", ["id" => $sampah->penyetor])->with('status', 'Data Sampah Berhasil ditotal');
+    }
+
+    public function updateSetorr(Request $request) 
+    {
+        // untuk validasi form
+        $this->validate($request, [
+            'user_id' => 'required',
+            'jenis' => 'required',
+            'kiloan' => 'required',
+            'pendapatan' => 'nullable',
+            'tanggal_setor' => 'required',
+            'penyetor' => 'required'
+        ]);
+        
+        DB::table('setoran')->where('id', $request->id)->update([
+            'user_id' => $request ->user_id,
+            'jenis' => $request->jenis,
+            'kiloan' => $request->kiloan,
+            'pendapatan' => $request->pendapatan,
+            'tanggal_setor' => $request->tanggal_setor,
+            'penyetor' => $request->penyetor
+        ]);
+        
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Diubah');
     }
 
 
@@ -283,5 +328,11 @@ class HomeController extends Controller
 
         Kategori::find($id)->delete();
         return redirect()->back()->with('status', 'Data Kategori Berhasil Dihapus');
+    }
+
+    public function tentangKami()
+    {
+
+        return view('tentang-kami');
     }
 }

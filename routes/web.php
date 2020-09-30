@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/setor/edit/{id}', 'HomeController@editSetor')->name('setor-edit');
+Route::post('/setorr/update', 'HomeController@updateSetorr')->name('setorr-update');
 Route::post('/setor/update', 'HomeController@updateSetor')->name('setor-update');
 Route::get('/delete-setor/{id}', 'HomeController@deleteSetor')->name('delete-setor');
 Route::get('/users/lihat/delete-setoruser/{id}', 'HomeController@deleteSetorUser')->name('delete-setoruser');
@@ -38,3 +39,6 @@ Route::post('/users/lihat/store', 'HomeController@storeWithUser')->name('storeWi
 Route::get('/edit-category/{id}', 'HomeController@editCategory')->name('edit-category');
 Route::post('/category/update', 'HomeController@updateCategory')->name('category-update');
 Route::get('/delete-category/{id}', 'HomeController@deleteCategory')->name('delete-category');
+
+Route::get('/tentang-kami', 'HomeController@tentangKami')->name('tentang-kami');
+Route::post('/set-setoran', 'HomeController@setSetoran')->name('set-setoran');
