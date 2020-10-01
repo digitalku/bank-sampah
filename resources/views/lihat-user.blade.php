@@ -139,7 +139,7 @@
                 </td>
                 <td>{{ $setor->tanggal_setor }}</td>
                 <td>
-                    <button class="btn btn-xs btn-info bg-inf" type="button" data-toggle="modal" data-target-id="{{ $setor->id }}" data-target-userid="{{ $setor->user_id }}" data-target-jenis="{{ $setor->jenis }}" data-target-pendapatan="{{ $setor->pendapatan }}"  data-target-penyetor="{{ $setor->penyetor }}" data-target-kiloan="{{ $setor->kiloan }}" data-target-tgl="{{ $setor->tanggal_setor }}" data-target="#modal-lgt"><i class="fa fa-edit"></i> Edit</span> </button>
+                    <!-- <button class="btn btn-xs btn-info bg-inf" type="button" data-toggle="modal" data-target-id="{{ $setor->id }}" data-target-userid="{{ $setor->user_id }}" data-target-jenis="{{ $setor->jenis }}" data-target-pendapatan="{{ $setor->pendapatan }}"  data-target-penyetor="{{ $setor->penyetor }}" data-target-kiloan="{{ $setor->kiloan }}" data-target-tgl="{{ $setor->tanggal_setor }}" data-target="#modal-lgt"><i class="fa fa-edit"></i> Edit</span> </button> -->
                     <!-- <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button" ><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> -->
                     <a href="delete-setoruser/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td>
@@ -211,81 +211,6 @@
   <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-lgt">
-  <div class="modal-dialog modal-lgt">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Edit Data Sampah</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{{ route('setorr-update') }}" role="form" method="post">
-          {{ csrf_field() }}
-          <div class="card-body">
-              <input class="form-control" name="id" type="hidden" id="pass_id">
-            <div class="form-group">
-                  <label>Jenis Sampah</label>
-                  <select name="jenis" id="jenis" class="form-control">
-                    <option value="">Pilih Jenis Sampah</option>
-                    @foreach($jenis as $data)
-                      @if($data->jenis == $setor->jenis)
-                      <option value="{{ $data->jenis }}" selected>{{ $data->jenis }}</option>
-                      @else
-                      <option value="{{ $data->jenis }}">{{ $data->jenis }}</option>
-                      @endif
-                    @endforeach
-                  </select>            
-            </div>
-            <div class="form-group">
-              <label>Kiloan</label>
-              <input class="form-control" name="kiloan" type="text" id="kiloann" >
-            </div>
-            <div class="form-group">
-              <label>Pendapatan</label>
-              <input class="form-control" name="pendapatan" type="text" id="total" >
-            </div>
-            <input name="user_id" id="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
-            <div class="form-group">
-                  <label>Penyetor</label>
-                  <select name="penyetor" class="form-control" id="penyetorr">
-                    <option value="">Pilih</option>
-                    @auth
-                    @if(Auth::user()->role_id == "1")
-                    @foreach($usersi as $users)
-                      @if($users->id == $setor->penyetor)
-                    <option value="{{ $users->id }}" selected>{{ $users->name }}</option>
-                      @else
-                    <option value="{{ $users->id }}">{{ $users->name }}</option>
-                      @endif
-                    @endforeach
-                    @else
-                    @foreach($userrole as $userrole)
-                      @if($userrole->id == $setor->penyetor)
-                    <option value="{{ $userrole->id }}" selected>{{ $userrole->name }}</option>
-                      @else
-                    <option value="{{ $userrole->id }}">{{ $userrole->name }}</option>
-                      @endif
-                    @endforeach
-                    @endif
-                    @endauth
-                  </select>
-                </div>
-            <input type="hidden" id="tgl" name="tanggal_setor" class="form-control" value="<?php echo date('Y-m-d'); ?>" >
-          </div>
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-success bg icon">Ubah</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
 
 <div class="modal fade" id="modal-sm">
   <div class="modal-dialog modal-sm">

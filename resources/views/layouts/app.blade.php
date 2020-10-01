@@ -15,11 +15,77 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/dist/css/adminlte.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/anim.css') }}" rel="stylesheet">
+    <style type="text/css">
+        body{
+          font-family: Ariel, Helvetica, sans-serif;
+          line-height: 1.6;
+          text-align: center;
+        }
+        .container{
+          max-width: 960px;
+          margin: auto;
+          padding: 0 30px;
+        }
+
+        #showcase{
+          height: 300px;
+          margin-top: -100px;
+        }
+
+        #showcase h1{
+          font-size: 50px;
+          line-height: 1.3;
+          position: relative;
+          animation: heading;
+          color: white;
+          animation-duration: 3s;
+          animation-fill-mode: forwards;
+        }
+
+        @keyframes heading{
+          0% {top: -50px;}
+          100% {top: 200px;}
+        }
+
+        #content {
+          position: relative;
+          animation-name: content;
+          animation-duration: 3s;
+          animation-fill-mode: forwards;
+        }
+
+        @keyframes content{
+          0% {left: -1000px;}
+          100% {left: 0px;}
+        }
+
+        .btnn{
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-top: 40px;
+            opacity: 0;
+            animation-name: btn;
+            animation-duration: 3s;
+            animation-delay: 3s;
+            animation-fill-mode: forwards;
+            transition-property: transform;
+            transition-duration: 1s;
+          }
+
+        @keyframes btn {
+          0%{opacity: 0}
+          100%{opacity: 1}
+        }
+    </style>
 </head>
-<body>
+<body style="background: #039b4e;">
     <div id="app">
         <!-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

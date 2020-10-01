@@ -8,91 +8,117 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/dist/css/adminlte.min.css">
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
+            body{
+              font-family: Ariel, Helvetica, sans-serif;
+              line-height: 1.6;
+              text-align: center;
+              background-color: #039b4e;
+            }
+            .container{
+              max-width: 960px;
+              margin: auto;
+              padding: 0 30px;
             }
 
-            .full-height {
-                height: 100vh;
+            #showcase{
+              height: 300px;
+              margin-top: -100px;
             }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
+            #showcase h1{
+              font-size: 50px;
+              line-height: 1.3;
+              position: relative;
+              animation: heading;
+              color: white;
+              animation-duration: 1s;
+              animation-fill-mode: forwards;
             }
 
-            .position-ref {
-                position: relative;
+            @keyframes heading{
+              0% {top: -50px;}
+              100% {top: 200px;}
             }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
+            #content {
+              position: relative;
+              animation-name: content;
+              animation-duration: 1s;
+              animation-fill-mode: forwards;
             }
 
-            .content {
-                text-align: center;
+            @keyframes content{
+              0% {left: -1000px;}
+              100% {left: 0px;}
             }
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
+            .btnn{
+                display: inline-block;
+                color: white;
                 text-decoration: none;
-                text-transform: uppercase;
-            }
+                margin-top: 40px;
+                opacity: 0;
+                animation-name: btn;
+                animation-duration: 1s;
+                animation-delay: 1s;
+                animation-fill-mode: forwards;
+                transition-property: transform;
+                transition-duration: 1s;
+              }
 
-            .m-b-md {
-                margin-bottom: 30px;
+            @keyframes btn {
+              0%{opacity: 0}
+              100%{opacity: 1}
             }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+            <div class="container-fluid">
+                <div class="col-md-12 mt-5">
+                      <img src="{{URL::asset('tempAdmin')}}/dist/img/icon-bg.png">
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="col-md-12">
+                    <header id="showcase">
+                      <h1>Selamat Datang di Bank Sampah</h1>
+                    </header>
                 </div>
+                <div class="col-md-12">        
+                    <div id="content" class="container mt-5">
+                      We're playing around with animations in CSS. It's really good to know that you don't have to use JavaScript or jQuery to animate and create interactions ALL of the time. Digging deeper into CSS.
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    @if (Route::has('login'))
+                        <div class="top-right links">
+                            @auth
+                                <a href="{{ url('/home') }}" class="btnn"><button type="button" class="btn btn-lg btn-light" data-toggle="modal" data-target="#modal-default">
+                                  Dashboard
+                                </button></a>
+                            @else
+                                <a href="{{ route('login') }}" class="btnn"><button type="button" class="btn btn-lg btn-light" data-toggle="modal" data-target="#modal-default">
+                                  Login
+                                </button></a>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}">Register</a>
+                                @endif
+                            @endauth
+                        </div>
+                    @endif
+                
+                    <!-- <a href="#" class="btnn"><button type="button" class="btn btn-lg btn-light" data-toggle="modal" data-target="#modal-default">
+                                  Login
+                                </button></a> -->
+                    
                 </div>
             </div>
         </div>
