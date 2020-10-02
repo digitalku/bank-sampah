@@ -1,79 +1,210 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Bank Sampah
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+- [Tentang](#tentang)
+- [Instalaasi](#instalasi)
+  - [Persyaratan server](#persyaratan-server)
+  - [Unduh source code](#unduh-source-code)
+  - [Konfigurasi](#konfigurasi)
+    - [Environment](#environment)
+    - [Konfigurasi Apache](#konfigurasi-apache)
+    - [Konfigurasi Nginx](#konfigurasi-nginx)
+    - [Konfigurasi Shared hosting/other](#shared-hostingother)
+- [Kontribusi](#kontribusi)
+- [License](#license)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tentang
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sebuah aplikasi untuk mendorong masyarakat untuk menabung pakai sampah dengan sistem modern yang dibuat dengan laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalasi
 
-## Learning Laravel
+### Persyaratan server
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Perangkat lunak berikut diperlukan di server Anda untuk menjalankan bank sampah.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Memiliki access SSH/Terminal (Untuk menjalankan perintah artisan)
+- Apache, nginx, IIS, or httpd (Apache preferred)
+- PHP >= 7.3
+- MariaDB or MysSQL >= 5.5, SQLite alternatively
+- Composer
+- Git (Untuk clone/update source code) (Optional)
+- PHP requirements
+  - BCMath PHP Extension
+  - Ctype PHP Extension
+  - Fileinfo PHP Extension
+  - OpenSSL PHP Extension
+  - PDO PHP Extension
+  - JSON PHP Extension
+  - Mbstring PHP Extension
+  - Tokenizer PHP Extension
+  - XML PHP Extension
 
-## Laravel Sponsors
+### Unduh source code
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Jika Anda ingin mengunduh versi stabil, Anda dapat melihat di [halaman rilis](https://github.com/jayahost/bank-sampah/release).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+Anda juga dapat melakukan clone dengan menjalankan command
 
-## Contributing
+```sh
+# clone bank sampah
+git clone https://github.com/jayahost/bank-sampah.git --depth=1
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Install `composer` dependencies
 
-## Code of Conduct
+```sh
+# download composer package
+curl -sS https://getcomposer.org/installer | php
+# update/install dependencies
+php composer.phar install --no-dev --prefer-dist
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+if you was already have composer inside you system, you just run `composer`.
 
-## Security Vulnerabilities
+```sh
+# update/install dependencies
+composer install --no-dev --prefer-dist
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Konfigurasi
+
+#### Environment
+
+Buat file `.env` sebagai konfigurasi aplikasi, Anda dapat menyalin contoh dari `.env.example`.
+
+Anda juga dapat menggunakan command berikut
+
+```sh
+cp .env.example .env
+```
+
+#### Konfigurasi Apache
+
+Untuk menjalankan Bank Sampah di Apache,
+Anda perlu membuat file konfigurasi Apache baru di folder konfigurasi Apache Anda (e.g /etc/apache2/sidtes-enabled atau /etc/httpd/sites-enabled)
+Atau dengan membuat virtual host baru seperti:
+
+Ganti `example.com` dengan alamat Anda, dan restart apache setelah selesai.
+
+```apache
+<VirtualHost *:80>
+    ServerName example.com
+    ServerAlias example.com
+
+    DocumentRoot "/var/www/bank-sampah/public"
+    <Directory "var/www/bank-sampah/public>
+        Require all granted
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    <Directory>
+</VirtualHost>
+```
+
+Jika `mode_rewrite` belum diaktifkan, Anda harus mengaktifkanya seperti:
+
+```apache
+# enable mode_rewrite
+a2enmod rewrite
+# restart apache di Ubuntu
+# sudo service apache2 restart
+
+# restart apache di Fedora/CentOS
+# sudo service httpd restart
+```
+
+#### Konfigurasi nginx
+
+Ganti `example.com` dengan alamat Anda. Anda perlu menginstall `php-fpm`:
+
+```sh
+sudo apt install php-fpm
+```
+
+Jika anda melakukan instalasi LEMP dari ['DigitalOcean']('https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-20-04')
+
+```nginx
+# Upstream to abstract backend connection(s) for php
+upstream php {
+    server unix:/var/run/php-fpm.sock;
+    server 127.0.0.1:9000;
+}
+
+# HTTP
+
+server {
+    listen       *:80;
+    root         /var/www/bank-sampah/public;
+    index        index.php index.html index.htm;
+    server_name  example.com; # Domain yang anda gunakan
+
+#   return 301 https://$server_name$request_uri; # Forces HTTPS, which enables privacy for login credentials.
+                                                 # Recommended for public, internet-facing, websites.
+
+    location / {
+            try_files $uri $uri/ /index.php$is_args$args;
+            # rewrite ^/([a-zA-Z0-9]+)/?$ /index.php?$1;
+    }
+
+    location ~ \.php$ {
+            try_files $uri =404;
+            include /etc/nginx/fastcgi_params;
+
+            fastcgi_pass    php;
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param   HTTP_HOST       $server_name;
+    }
+}
+
+
+# HTTPS
+
+#server {
+#   listen              *:443 ssl;
+#   ssl_certificate     /etc/ssl/my.crt;
+#   ssl_certificate_key /etc/ssl/private/my.key;
+#   root                /var/www/bank-sampah/public;
+#   index index.php index.html index.htm;
+#   server_name         example.com;
+#
+#   location / {
+#           try_files $uri $uri/ /index.php$is_args$args;
+#           # rewrite ^/([a-zA-Z0-9]+)/?$ /index.php?$1;
+#   }
+#
+#   location ~ \.php$ {
+#           try_files $uri =404;
+#           include /etc/nginx/fastcgi_params;
+#
+#           fastcgi_pass    php;
+#           fastcgi_index   index.php;
+#           fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#           fastcgi_param   HTTP_HOST       $server_name;
+#   }
+#}
+```
+
+##### Shared hosting/other
+
+Untuk menjalankan Bank Sampah di shared hostring, anda harus set home directory ke `/PATH_TO_BANK_SAMPAH/public`, jangan di root folder.
+
+Atau jika anda menggunakan cPanel, anda dapat membuat file `.htaccess` seperti berikut untuk menetapkan request ke public directory.
+
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
+
+## Kontribusi
+
+Terimakasih telah mempertimbangkan untuk berkontribusi pada Bank Sampah!
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Bank Sampah is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
