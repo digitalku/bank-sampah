@@ -76,7 +76,7 @@
                    <div class="form-group">
                      <div class="row">
                       <div class="col-md-4"><h5 for="email">Total Pendapatan</h5></div>
-                      <div class="col-md-7"><h5 for="email">: </h5></div>
+                      <div class="col-md-7"><h5 for="email">: @currency($hitung)</h5></div>
                     </div>
                   </div>
                 </div>              
@@ -122,7 +122,7 @@
                 <th>Kiloan</th>
                 <th>Pendapatan</th>
                 <th>Tanggal Setor</th>
-                <th>Action</th>
+                <!-- <th>Action</th> -->
               </tr>
               </thead>
               <tbody>
@@ -134,15 +134,15 @@
                   @if($setor->pendapatan==null)
                   <button class="btn btn-info hitung-pendapatan" type="button">Hitung Pendapatan </button>
                   @else
-                  {{ $setor->pendapatan}}
+                  @currency($setor->pendapatan)
                   @endif
                 </td>
                 <td>{{ $setor->tanggal_setor }}</td>
-                <td>
-                    <!-- <button class="btn btn-xs btn-info bg-inf" type="button" data-toggle="modal" data-target-id="{{ $setor->id }}" data-target-userid="{{ $setor->user_id }}" data-target-jenis="{{ $setor->jenis }}" data-target-pendapatan="{{ $setor->pendapatan }}"  data-target-penyetor="{{ $setor->penyetor }}" data-target-kiloan="{{ $setor->kiloan }}" data-target-tgl="{{ $setor->tanggal_setor }}" data-target="#modal-lgt"><i class="fa fa-edit"></i> Edit</span> </button> -->
-                    <!-- <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button" ><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> -->
+               <!--  <td>
+                    <button class="btn btn-xs btn-info bg-inf" type="button" data-toggle="modal" data-target-id="{{ $setor->id }}" data-target-userid="{{ $setor->user_id }}" data-target-jenis="{{ $setor->jenis }}" data-target-pendapatan="{{ $setor->pendapatan }}"  data-target-penyetor="{{ $setor->penyetor }}" data-target-kiloan="{{ $setor->kiloan }}" data-target-tgl="{{ $setor->tanggal_setor }}" data-target="#modal-lgt"><i class="fa fa-edit"></i> Edit</span> </button>
+                    <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button" ><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
                     <a href="delete-setoruser/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
-                </td>
+                </td> -->
               </tr>
               @endforeach
               </tbody>
@@ -193,7 +193,7 @@
               <label for="kiloan">Kiloan</label>
               <input name="kiloan" type="text" class="form-control" id="kiloan" autocomplete="off">
             </div>
-            <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $setorann->penyetor}}">
+            <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $users->id}}">
             <input name="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
             <input name="pendapatan" type="hidden" class="form-control" >
             <input type="hidden" name="tanggal_setor" class="form-control" value="<?php echo date('Y-m-d'); ?>" >

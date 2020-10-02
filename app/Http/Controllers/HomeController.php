@@ -52,11 +52,14 @@ class HomeController extends Controller
                     ->get();
         $setoran = DB::table('setoran')
                     ->where('penyetor', $id)->get();
+        $hitung = DB::table('setoran')
+                    ->where('penyetor', $id)
+                    ->sum('setoran.pendapatan');
         $setorann = DB::table('setoran')->where('penyetor', $id)->first();
         $users = DB::table('users')->where('id', $id)->first();
         $usersi = DB::table('users')->get();
         $jenis = Kategori::all();
-        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani]);
+        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani])->with(['hitung' => $hitung]);
     }
 
 
@@ -118,7 +121,7 @@ class HomeController extends Controller
             'password' => Hash::make($request->password)
         ]);
         // alihkan halaman edit ke halaman books
-        return redirect('home')->with('status', 'Data User Berhasil DiUbah');
+        return redirect()->back()->with('status', 'Data User Berhasil diubah');
     }
 
     public function storeUsers(Request $request)
@@ -132,7 +135,7 @@ class HomeController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect('home')->with('status', 'Data User Berhasil Ditambahkan');
+        return redirect()->back()->with('status', 'Data User Berhasil Ditambahkan');
      
     }
 
@@ -149,7 +152,7 @@ class HomeController extends Controller
 
         User::find($id)->delete();
      
-        return redirect('home')->with('status', 'Data User Berhasil Dihapus');
+        return redirect()->back()->with('status', 'Data User Berhasil Dihapus');
     }
 
     public function sampah()
@@ -159,7 +162,10 @@ class HomeController extends Controller
                     ->get();
         $users = DB::table('users')->get();
         $jenis = Kategori::all();
-        $setoran = DB::table('setoran')->get();
+        $setoran = DB::table('setoran')
+                    ->select('setoran.*', 'users.*')
+                    ->leftJoin('users', 'users.id', 'setoran.penyetor')
+                    ->get();
         return view('sampah', ['setoran' => $setoran], ['jenis' => $jenis])->with(['userrole'=> $userrole])->with(['users' => $users]);
     }
 
@@ -258,7 +264,7 @@ class HomeController extends Controller
             'penyetor' => $request->penyetor
         ]);
 
-        return redirect('sampah')->with('status', 'Data Sampah Berhasil Ditambahkan');
+        return redirect()->back()->with('status', 'Data Sampah Berhasil Ditambah');
      
     }
 

@@ -28,6 +28,14 @@
              <form action="{{ route('users-update') }}" role="form" method="post">
           {{ csrf_field() }}
           <div class="card-body">
+            @if (session('status'))
+                    <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
               <label for="name">Nama</label>
@@ -60,7 +68,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input name="password" type="text" class="form-control" id="password" value="{{ $users->password }}">
+              <input name="password" type="text" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->

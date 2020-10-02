@@ -83,9 +83,13 @@
           0%{opacity: 0}
           100%{opacity: 1}
         }
+        .pad{
+          margin-top: 300px;
+          margin-bottom: 300px;
+        }
     </style>
 </head>
-<body style="background: #039b4e;">
+<body>
     <div id="app">
         <!-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
