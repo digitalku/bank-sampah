@@ -114,7 +114,7 @@
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
+          <div class="card-body" style="overflow: auto;">
             <table id="datatables-sampah" class="table table-bordered table-hover">
               <thead>
               <tr>

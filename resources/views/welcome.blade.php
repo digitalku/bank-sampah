@@ -29,12 +29,12 @@
             }
 
             #showcase{
-              height: 300px;
-              margin-top: -100px;
+              height: 200px;
+              margin-top: -150px;
+              margin-bottom: 100px;
             }
 
-            #showcase h1{
-              font-size: 50px;
+            #showcase h3{
               line-height: 1.3;
               position: relative;
               animation: heading;
@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-12">
                     <header id="showcase">
-                      <h1>Selamat Datang di Bank Sampah</h1>
+                      <h3>Selamat Datang di Bank Sampah</h3>
                     </header>
                 </div>
                 <div class="col-md-12">        
@@ -105,7 +105,7 @@
                                 </button></a>
                             @else
                                 <a href="{{ route('login') }}" class="btnn"><button type="button" class="btn btn-lg btn-light" data-toggle="modal" data-target="#modal-default">
-                                  Login
+                                  SignIn
                                 </button></a>
 
                                 @if (Route::has('register'))
