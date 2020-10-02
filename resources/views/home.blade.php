@@ -126,7 +126,7 @@
               <tr>
                 <td>{{ $sbu->jenis }}</td>
                 <td>{{ $sbu->kiloan }} kg</td>
-                <td>{{ $sbu->pendapatan }}</td>
+                <td>@currency($sbu->pendapatan)</td>
                 <td>{{ $sbu->tanggal_setor }}</td>
               </tr>
               </tbody>
