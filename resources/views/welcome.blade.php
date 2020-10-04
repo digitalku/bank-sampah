@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-12">        
                     <div id="content" class="container mt-5">
-                      We're playing around with animations in CSS. It's really good to know that you don't have to use JavaScript or jQuery to animate and create interactions ALL of the time. Digging deeper into CSS.
+                      bsdrajat.nix.id adalah aplikasi berbasis web yang bertujuan untuk mendukung kegiatan operasional Bank Sampah di desa Drajat.
                     </div>
                 </div>
                 <div class="col-md-12">

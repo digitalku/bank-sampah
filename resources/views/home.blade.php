@@ -52,7 +52,7 @@
               </div>
               @else
               <div class="col-md-2">
-                <h3>Your Trash</h3>
+                <h3>Daftar Sampah</h3>
               </div>
               @endif
               @endauth
