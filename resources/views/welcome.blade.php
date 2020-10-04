@@ -5,6 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        
+        
+        <link rel="apple-touch-icon" sizes="57x57" href="https://img.bsdrajat.nix.id/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://img.bsdrajat.nix.id/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://img.bsdrajat.nix.id/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://img.bsdrajat.nix.id/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://img.bsdrajat.nix.id/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://img.bsdrajat.nix.id/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://img.bsdrajat.nix.id/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://img.bsdrajat.nix.id/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://img.bsdrajat.nix.id/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="https://img.bsdrajat.nix.id/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://img.bsdrajat.nix.id/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://img.bsdrajat.nix.id/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://img.bsdrajat.nix.id/icon/favicon-16x16.png">
+<link rel="manifest" href="https://img.bsdrajat.nix.id/icon/manifest.json">
+<meta name="msapplication-TileColor" content="green">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="green">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -93,7 +112,8 @@
                 </div>
                 <div class="col-md-12">        
                     <div id="content" class="container mt-5">
-                      bsdrajat.nix.id adalah aplikasi berbasis web yang bertujuan untuk mendukung kegiatan operasional Bank Sampah di desa Drajat.
+                      Selamat datang di aplikasi web Bank Sampah untuk desa drajat. aplikasi ini di desain dan dikelola oleh Ansor Drajat team ekonomi kreatif dengan sepenuh hati. <br>
+                      akun akan didapat dari petugas saat penyetoran sampah untuk pertama kalinya
                     </div>
                 </div>
                 <div class="col-md-12">
