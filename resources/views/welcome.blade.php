@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Bank Sampah Ansor Drajat') }}</title>
         
         
         <link rel="apple-touch-icon" sizes="57x57" href="https://img.bsdrajat.nix.id/icon/apple-icon-57x57.png">
@@ -103,7 +103,8 @@
         <div class="flex-center position-ref full-height">
             <div class="container-fluid">
                 <div class="col-md-12 mt-5">
-                      <img src="{{URL::asset('tempAdmin')}}/dist/img/icon-bg.png">
+                    <img src="{{URL::asset('tempAdmin')}}/dist/img/icon-bg.png">
+                    <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor-login.jpg" height="145">
                 </div>
                 <div class="col-md-12">
                     <header id="showcase">

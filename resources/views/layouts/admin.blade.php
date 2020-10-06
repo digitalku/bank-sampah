@@ -60,6 +60,10 @@
       background-color: #039b4e;
       border-color: #039b4e;
     }
+    .bg-sukses{
+      background-color: #2cea8a;
+      border-color: #2cea8a;
+    }
     .bg-bhy{
       background-color: #f21711;
       border-color: #f21711;
@@ -72,6 +76,19 @@
       background-color: #ccaa00;
       border-color: #ccaa00;
       color: white;
+    }
+    .sidebar .os-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar .sidebar-nav {
+      flex: 1 1;
+    }
+
+    .sidebar .logo-ansor {
+      flex: 0 0;
+      padding-bottom: 20px;
     }
   </style>
 </head>
@@ -232,6 +249,25 @@ $('.delete-confirm').on('click', function (event) {
     $(document).ready(function () {
         var elButtons = $("#datatables-sampah .hitung-pendapatan");
         var elFormSetSetoran = $("#set-setoran");
+
+        if (!elButtons || !elFormSetSetoran) return;
+
+        elButtons.click(function() {
+          var id = $(this).closest("tr").data('id');
+          if (!id) return;
+
+          var elInputName = elFormSetSetoran.find("input[name='id']");
+          elInputName.val(id);
+          elFormSetSetoran.submit();
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var elButtons = $("#datatables-sampah .withdrawal");
+        var elFormSetSetoran = $("#set-withdraw");
 
         if (!elButtons || !elFormSetSetoran) return;
 

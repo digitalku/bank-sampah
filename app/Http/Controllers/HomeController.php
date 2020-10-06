@@ -9,6 +9,7 @@ use App\Kategori;
 use App\User;
 use App\Setoran;
 use Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -62,6 +63,26 @@ class HomeController extends Controller
         return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani])->with(['hitung' => $hitung]);
     }
 
+    public function Withdrawal(Request $request)
+    {   
+
+        $pendapatan = $request->pendapatan;
+        if (is_numeric($pendapatan)) {
+            $pendapatan = -$pendapatan;
+        }
+
+        DB::table('setoran')->insert([
+            'user_id' => $request->user_id,
+            'jenis' => 'withdrawal',
+            'kiloan' => 0,
+            'pendapatan' => $pendapatan,
+            'tanggal_setor' => Carbon::now()->toDateTimeString(),
+            'penyetor' => $request->penyetor,
+        ]);
+
+        return redirect()->back()->with('status', 'Withdrawal Berhasil');
+    }
+
 
     public function updatePendapatan(Request $request) 
     {
@@ -79,7 +100,7 @@ class HomeController extends Controller
             'jenis' => $request->jenis,
             'kiloan' => $request->kiloan,
             'pendapatan' => $request->pendapatan,
-            'tanggal_setor' => $request->tanggal_setor,
+            'tanggal_setor' => Carbon::now()->toDateTimeString(),
             'penyetor' => $request->penyetor
         ]);
         return redirect()->back()->with('status', 'Data Sampah Berhasil Ditotal');
@@ -92,7 +113,7 @@ class HomeController extends Controller
             'jenis' => $request->jenis,
             'kiloan' => $request->kiloan,
             'pendapatan' => $request->pendapatan,
-            'tanggal_setor' => $request->tanggal_setor,
+            'tanggal_setor' => Carbon::now()->toDateTimeString(),
             'penyetor' => $request->penyetor
         ]);
 
@@ -165,6 +186,7 @@ class HomeController extends Controller
         $setoran = DB::table('setoran')
                     ->select('setoran.*', 'users.*')
                     ->leftJoin('users', 'users.id', 'setoran.penyetor')
+                    ->where('jenis', '!=', 'withdrawal')
                     ->get();
         return view('sampah', ['setoran' => $setoran], ['jenis' => $jenis])->with(['userrole'=> $userrole])->with(['users' => $users]);
     }
@@ -228,6 +250,7 @@ class HomeController extends Controller
         return redirect()->route("users-lihat", ["id" => $sampah->penyetor])->with('status', 'Data Sampah Berhasil ditotal');
     }
 
+
     public function updateSetorr(Request $request) 
     {
         // untuk validasi form
@@ -287,12 +310,16 @@ class HomeController extends Controller
     public function createData()
     {
         $this->authorize('create data');
-        $category = Kategori::all();
+        $category = Kategori::where('jenis', '!=', 'withdrawal')->get();
         return view('category', ['category' => $category]);
     }
 
     public function storeCategory(Request $request)
     {
+        if ($request->jenis == 'withdrawal') {
+            return redirect()->back()->with('status', 'Gak oleh nambah jenis withdrawal');
+        }
+        
         DB::table('kategori')->insert([
             'jenis' => $request->jenis,
             'harga' => $request->harga,

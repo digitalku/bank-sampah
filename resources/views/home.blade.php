@@ -58,15 +58,15 @@
               @endauth
             </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
               
               @auth
               @if(Auth::user()->role_id == "1")
+          <!-- /.card-header -->
+          <div class="card-body" style="overflow: auto;">
+            <table id="example1" class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th>Name</th>
+                <th>Nama</th>
                 <th>Alamat</th>
                 <th>Username</th>
                 <th>Action</th>
@@ -87,10 +87,15 @@
               </tr>
               </tbody>
               @endforeach
+
+            </table>
+          </div>
               @elseif(Auth::user()->role_id == "2")
+          <div class="card-body" style="overflow: auto;">
+            <table id="example1" class="table table-bordered table-hover">
               <thead>
               <tr>
-                <th>Name</th>
+                <th>Nama</th>
                 <th>Alamat</th>
                 <th>Username</th>
                 <th>Action</th>
@@ -111,7 +116,12 @@
               </tr>
               </tbody>
               @endforeach
+            </table>
+          </div>
               @else
+          
+          <div class="card-body" style="overflow: auto;">
+            <table id="example1" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th>Jenis Sampah</th>
@@ -131,10 +141,10 @@
               </tr>
               </tbody>
               @endforeach
-              @endif
-              @endauth
             </table>
           </div>
+              @endif
+              @endauth
           <!-- /.card-body -->
         </div>
         <!-- /.card -->

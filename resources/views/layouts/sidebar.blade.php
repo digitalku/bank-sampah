@@ -20,7 +20,7 @@
       </div> -->
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-2 sidebar-nav">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -48,6 +48,11 @@
               <p>
                 Kategori
               </p>
+            </a>
+          </li>
+          <li class="nav-item text-center" style="padding-top: 80px;">
+            <a>
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" width="150">
             </a>
           </li>
 
@@ -78,6 +83,12 @@
             </a>
           </li>
 
+          <!-- <li class="nav-item text-center" style="padding-top: 50px;">
+            <a>
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" width="150">
+            </a>
+          </li> -->
+
           @else
           <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link">
@@ -87,11 +98,19 @@
               </p>
             </a>
           </li>
+          <li class="nav-item text-center" style="padding-top: 80px;">
+            <a>
+              <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" width="150">
+            </a>
+          </li>
           @endif
           @endauth
         
         </ul>
       </nav>
+      <div class="logo-ansor text-center">
+        <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" class="img-fluid" style="max-width: 150px" >
+      </div>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

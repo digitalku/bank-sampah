@@ -22,6 +22,7 @@
   <input type="hidden" name="id" value="">
 </form>
 
+
 <section class="content">
   <div class="container-fluid">
     <div class="row">
@@ -93,17 +94,24 @@
                 <div class="text-center">
                    <h3>Data Sampah</h3>
                    <div class="row">
-                     <div class="col-md-4">
+                      <div class="col-md-4">
                         @if (session('status'))
-                        <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
+                        <div class="alert alert-info alert-disabled fade show bg-sukses" role="alert">
                             {{ session('status') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         @endif   
-                     </div>
-                     <div class="col-md-8 text-right">
+                      </div>
+                      <div class="col-md-4">
+                      </div>
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
+                          Withdrawal
+                      </button>
+                      </div>
+                     <div class="col-md-2">
                         <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lgi">
                           Tambah Sampah
                         </button>
@@ -122,7 +130,6 @@
                 <th>Kiloan</th>
                 <th>Pendapatan</th>
                 <th>Tanggal Setor</th>
-                <!-- <th>Action</th> -->
               </tr>
               </thead>
               <tbody>
@@ -134,7 +141,7 @@
                   @if($setor->pendapatan==null)
                   <button class="btn btn-info hitung-pendapatan" type="button">Hitung Pendapatan </button>
                   @else
-                  @currency($setor->pendapatan)
+                  @currency($setor->pendapatan)                
                   @endif
                 </td>
                 <td>{{ $setor->tanggal_setor }}</td>
@@ -194,9 +201,9 @@
               <input name="kiloan" type="text" class="form-control" id="kiloan" autocomplete="off">
             </div>
             <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $users->id}}">
+            <input class="form-control" type="hidden" name="tanggal_setor" id="tanggal_setor">
             <input name="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
             <input name="pendapatan" type="hidden" class="form-control" >
-            <input type="hidden" name="tanggal_setor" class="form-control" value="<?php echo date('Y-m-d'); ?>" >
           </div>
           <!-- /.card-body -->
 
@@ -212,37 +219,43 @@
 </div>
 
 
-<div class="modal fade" id="modal-sm">
-  <div class="modal-dialog modal-sm">
+<div class="modal fade" id="modal-lg">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Hitung Pendapatan</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="modal-title">Withdrawal</h5>
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
-        <form action="{{ route('pendapatan-update') }}" role="form" method="post">
+        <form action="{{ route('set-withdrawal') }}" role="form" method="post">
           {{ csrf_field() }}
           <div class="card-body">
-              <input class="form-control" name="id" type="hidden" id="pass_id">
             <div class="form-group">
-              <label>Jenis Sampah</label>
-              <input class="form-control" name="jenis" type="text" id="jenis">
+              <input name="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
+              <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $users->id}}">
+              <label for="pendapatan">Pendapatan</label>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Rp</div>
+                </div>
+                <input type="number" name="pendapatan" class="form-control" id="inlineFormInputGroup" placeholder="0">
+              </div>
             </div>
-            <div class="form-group">
-              <label>Kiloan</label>
-              <input class="form-control" name="kiloan" type="text" id="kiloann" >
-            </div>
-            <input class="form-control" name="pendapatan" type="hidden" id="total" >
-            <input name="user_id" id="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
-            <input class="form-control" name="penyetor" type="hidden" id="penyetorr" >
-            <input type="hidden" id="tgl" name="tanggal_setor" class="form-control" value="<?php echo date('Y-m-d'); ?>" >
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success bg icon">Ubah</button>
+            <button type="submit" class="btn btn-success bg icon">Submit</button>
           </div>
         </form>
       </div>
@@ -251,6 +264,7 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
 
 
 @endsection
