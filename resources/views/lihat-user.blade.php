@@ -76,6 +76,12 @@
                   </div>
                    <div class="form-group">
                      <div class="row">
+                      <div class="col-md-4"><h5 for="rekening">Nomor Rekening</h5></div>
+                      <div class="col-md-7"><h5 for="rekening">: {{ $users->rekening}}</h5></div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                     <div class="row">
                       <div class="col-md-4"><h5 for="email">Total Pendapatan</h5></div>
                       <div class="col-md-7"><h5 for="email">: @currency($hitung)</h5></div>
                     </div>
@@ -249,6 +255,8 @@
                   <div class="input-group-text">Rp</div>
                 </div>
                 <input type="number" name="pendapatan" class="form-control" id="inlineFormInputGroup" placeholder="0">
+                <input type="hidden" name="penerima" class="form-control" id="inlineFormInputGroup" placeholder="email" value="{{ $users->email }}">
+                <input type="hidden" class="form-control" name="pesan" value="hello selamat anda mendapatkan rezeki nomplok"></input>
               </div>
             </div>
           </div>

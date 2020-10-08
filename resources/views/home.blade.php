@@ -25,7 +25,7 @@
         <div class="card">
           <div class="card-header">
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-8">
                 <div class="col-6">
                     @if (session('status'))
                     <div class="alert alert-info alert-disabled fade show bg-icon" role="alert">
@@ -39,19 +39,19 @@
               </div>
               @auth
               @if(Auth::user()->role_id == "1")
-              <div class="col-md-2">
+              <div class="col-md-4 text-right">
                 <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah User
                 </button>
               </div>
               @elseif(Auth::user()->role_id == "2")
-              <div class="col-md-2">
+              <div class="col-md-4 text-right">
                 <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                   Tambah User
                 </button>
               </div>
               @else
-              <div class="col-md-2">
+              <div class="col-md-4 text-right">
                 <h3>Daftar Sampah</h3>
               </div>
               @endif
@@ -141,6 +141,14 @@
               </tr>
               </tbody>
               @endforeach
+              <tfoot>
+                <tr>
+                  <th style="border-right: none;">Total Pendapatan</th>
+                  <th></th>
+                  <th style="border-right: none;">@currency($hitung)</th>
+                  <th></th>
+                </tr>
+              </tfoot>
             </table>
           </div>
               @endif
@@ -214,6 +222,10 @@
             <div class="form-group">
               <label for="password">Password</label>
               <input name="password" type="password" class="form-control" id="password" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="rekening">Nomor Rekening</label>
+              <input name="rekening" type="number" class="form-control" id="rekening" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->

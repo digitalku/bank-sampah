@@ -5,19 +5,18 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Edit Data User</h1>
+        <h1 class="m-0 text-dark">Ubah Rekening dan Password</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-          <li class="breadcrumb-item active">Edit Data User</li>
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Ubah Rekening dan Password</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
-
-
+ <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
     <div class="row">
@@ -38,18 +37,15 @@
                     @endif
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
-              <label for="name">Nama</label>
-              <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
+              <input name="name" type="hidden" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="username">Username</label>
-              <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
+              <input name="username" type="hidden" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
             </div>
-            <div class="form-group">
-              <label for="alamat">Alamat</label>
+            <div class="form-group" style="display: none;">
               <textarea name="alamat" class="form-control">{{ $users->alamat}}</textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
               <label>Hak Akses Sebagai</label>
               <select name="role_id" class="form-control">
                 <option value="">Pilih</option>
@@ -75,8 +71,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
+              <input name="email" type="hidden" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening</label>
@@ -84,7 +79,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input name="password" type="text" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
+              <input name="password" type="text" class="form-control" id="password" placeholder="masukkan password" autocomplete="off" required>
             </div>
           </div>
           <!-- /.card-body -->
@@ -103,4 +98,5 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+
 @endsection

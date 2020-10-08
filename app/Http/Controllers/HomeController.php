@@ -10,6 +10,8 @@ use App\User;
 use App\Setoran;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Withdrawal;
 
 class HomeController extends Controller
 {
@@ -39,9 +41,12 @@ class HomeController extends Controller
                     ->get();
         $store = Auth::user()->id;
         $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
+        $hitung = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->sum('setoran.pendapatan');
         $users = DB::table('users')->get();
         
-        return view('home', compact('storeByUser'))->with(['users' => $users])->with(['userrole' => $userrole])->with(['roles' => $roles])->with(['role' => $role])->with(['storeByUser' => $storeByUser]);
+        return view('home', compact('storeByUser'))->with(['users' => $users])->with(['userrole' => $userrole])->with(['roles' => $roles])->with(['role' => $role])->with(['storeByUser' => $storeByUser])->with(['hitung' => $hitung]);
     }
 
     public function lihatUser($id)
@@ -65,6 +70,13 @@ class HomeController extends Controller
 
     public function Withdrawal(Request $request)
     {   
+        try{
+            Mail::to($request->penerima)->send(new Withdrawal([
+                'pesan' => $request->pesan
+            ]));
+        }catch (Exception $e){
+            return response (['status' => false,'errors' => $e->getMessage()]);
+        }
 
         $pendapatan = $request->pendapatan;
         if (is_numeric($pendapatan)) {
@@ -130,7 +142,8 @@ class HomeController extends Controller
             'alamat' => 'required',
             'username' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'rekening' => 'nullable'
         ]);
         // update data books
         DB::table('users')->where('id', $request->id)->update([
@@ -139,7 +152,8 @@ class HomeController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'rekening' => $request->rekening
         ]);
         // alihkan halaman edit ke halaman books
         return redirect()->back()->with('status', 'Data User Berhasil diubah');
@@ -153,7 +167,8 @@ class HomeController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'rekening' => $request->rekening
         ]);
 
         return redirect()->back()->with('status', 'Data User Berhasil Ditambahkan');
@@ -162,10 +177,11 @@ class HomeController extends Controller
 
     public function editUser($id)
     {
-    
+        $role = DB::table('roles')->whereNotIn('id', array(1, 2))
+                    ->get();
         $users = DB::table('users')->where('id',$id)->first();
         $roles = DB::table('roles')->get();
-        return view('edit-user', ['roles' => $roles], ['users' => $users]);
+        return view('edit-user', ['roles' => $roles], ['users' => $users])->with(['role' => $role]);
     }
 
     public function deleteUser($id)
@@ -367,5 +383,16 @@ class HomeController extends Controller
     {
 
         return view('tentang-kami');
+    }
+
+    public function UbahPassword()
+    {
+        
+        $store = Auth::user()->id;        
+        $users = DB::table('users')->where('id', $store)->first();
+        $role = DB::table('roles')->whereNotIn('id', array(1, 2))
+                    ->get();
+        $roles = DB::table('roles')->get();
+        return view('ubah-password')->with(['users' => $users])->with(['role' => $role])->with(['roles' => $roles]);
     }
 }

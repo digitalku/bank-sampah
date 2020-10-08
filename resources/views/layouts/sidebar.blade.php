@@ -50,11 +50,6 @@
               </p>
             </a>
           </li>
-          <li class="nav-item text-center" style="padding-top: 80px;">
-            <a>
-              <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" width="150">
-            </a>
-          </li>
 
 
           @elseif(Auth::user()->role_id == "2")
@@ -92,15 +87,18 @@
           @else
           <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-box"></i>
               <p>
-                Sampah
+                Deposit Sampah
               </p>
             </a>
           </li>
-          <li class="nav-item text-center" style="padding-top: 80px;">
-            <a>
-              <img src="{{URL::asset('tempAdmin')}}/dist/img/ansor.jpg" width="150">
+          <li class="nav-item">
+            <a href="{{ route('ubah-password') }}" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Ubah Password
+              </p>
             </a>
           </li>
           @endif

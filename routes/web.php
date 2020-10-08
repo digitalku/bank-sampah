@@ -48,5 +48,11 @@ Route::middleware('auth')->group(function () {
 	Route::get('/tentang-kami', 'HomeController@tentangKami')->name('tentang-kami');
 	Route::post('/set-setoran', 'HomeController@setSetoran')->name('set-setoran');
 	Route::post('/set-witdraw', 'HomeController@Withdrawal')->name('set-withdrawal');
+
+	Route::get('/ubah-password', 'HomeController@UbahPassword')->name('ubah-password');
+
+
+	Route::get('/mail', 'PhpmailerController@Mail')->name('mail');
+	Route::post('/send-mail', 'PhpmailerController@sendMail')->name('send-mail');
 });
 
