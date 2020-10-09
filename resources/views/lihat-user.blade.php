@@ -17,10 +17,6 @@
   </div><!-- /.container-fluid -->
 </div>
 
-<form id="set-setoran" action="{{ route('set-setoran') }}" method="POST" style="display: none">
-  @csrf
-  <input type="hidden" name="id" value="">
-</form>
 
 
 <section class="content">
@@ -129,17 +125,17 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body" style="overflow: auto;">
-            <table id="datatables-sampah" class="table table-bordered table-hover">
+            <table id="datatables-sampah" class="table table-bordered table-hover datatable-sampah">
               <thead>
               <tr>
                 <th>Jenis Sampah</th>
                 <th>Kiloan</th>
-                <th>Pendapatan</th>
                 <th>Tanggal Setor</th>
+                <th>Pendapatan</th>
               </tr>
               </thead>
               <tbody>
-              @foreach($setoran as $setor)
+              {{--@foreach($setoran as $setor)
               <tr data-id="{{ $setor->id }}">
                 <td>{{ $setor->jenis }}</td>
                 <td>{{ $setor->kiloan }} kg</td>
@@ -157,7 +153,7 @@
                     <a href="delete-setoruser/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td> -->
               </tr>
-              @endforeach
+              @endforeach--}}
               </tbody>
             </table>
           </div>
@@ -271,8 +267,77 @@
     <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
-</div>
+</div> 
+
+@endsection
 
 
+@section('script')
 
+<script>
+    $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //$.ajax({url: '/deletekios/' + id, type: 'POST'})
+            $.post('/deletekios/' + id).then()
+            $modalDiv.addClass('loading');
+            setTimeout(function() {
+                $modalDiv.modal('hide').removeClass('loading');
+                $('#config-table').DataTable().ajax.reload();
+            })
+        });
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        var data = $(e.relatedTarget).data();
+        $('.title', this).text(data.recordTitle);
+        $('.btn-ok', this).data('recordId', data.recordId);
+    });
+
+    $(document).ready(function() {
+        $('#exp_date').hide();
+        $('#labelexp').hide();
+        $("#cb_expdate").change(function(){
+            if($(this).is(':checked')){
+                $('#exp_date').show();
+                $('#labelexp').show();
+            }else{
+                $('#exp_date').hide();
+                $('#labelexp').hide();
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        setoran = $("#id").val()
+        var i=0;
+        var table=$('#datatables-sampah').DataTable({
+            processing: true,
+            serverSide: true,
+            "ajax": "/list-setor-byusers/" + setoran,
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'jenis', name: 'jenis'},
+              {data: 'kiloan', name: 'kiloan'},
+              {data: 'tanggal_setor', name: 'tanggal_setor'},
+              {data: 'pendapatan', 
+                render: function(data){
+                  if (data==null) {
+                    return '<button class="btn btn-info hitung-pendapatan" type="button">Hitung Pendapatan </button>'
+                  } else {
+                    return data;
+                  }
+                }
+              },
+            ],
+        });
+    });
+
+</script>
 @endsection

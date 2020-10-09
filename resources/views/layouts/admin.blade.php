@@ -161,6 +161,7 @@
 <script src="{{URL::asset('tempAdmin')}}/plugins/select2/js/select2.full.min.js"></script>
 <!-- Toastr -->
 <script src="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.js"></script>
+@yield('script')
 <!-- page script -->
 <script>
   $(function () {
@@ -247,7 +248,7 @@ $('.delete-confirm').on('click', function (event) {
 
 <script>
     $(document).ready(function () {
-        var elButtons = $("#datatables-sampah .hitung-pendapatan");
+        var elButtons = $(".datatable-sampah .hitung-pendapatan");
         var elFormSetSetoran = $("#set-setoran");
 
         if (!elButtons || !elFormSetSetoran) return;

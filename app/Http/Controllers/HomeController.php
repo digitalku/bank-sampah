@@ -56,8 +56,6 @@ class HomeController extends Controller
                     ->leftJoin('kategori', 'kategori.id', 'setoran.jenis')
                     ->where('setoran.penyetor', $id)
                     ->get();
-        $setoran = DB::table('setoran')
-                    ->where('penyetor', $id)->get();
         $hitung = DB::table('setoran')
                     ->where('penyetor', $id)
                     ->sum('setoran.pendapatan');
@@ -65,7 +63,7 @@ class HomeController extends Controller
         $users = DB::table('users')->where('id', $id)->first();
         $usersi = DB::table('users')->get();
         $jenis = Kategori::all();
-        return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani])->with(['hitung' => $hitung]);
+        return view('lihat-user', ['users' => $users])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani])->with(['hitung' => $hitung]);
     }
 
     public function Withdrawal(Request $request)

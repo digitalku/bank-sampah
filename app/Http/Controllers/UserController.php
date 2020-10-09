@@ -16,49 +16,67 @@ class UserController extends Controller
     public function index()
     {
         
-       
         $roles = DB::table('roles')->get();
         $role = DB::table('roles')->whereNotIn('id', array(1, 2))
                     ->get();
         $store = Auth::user()->id;
-       
-        return view('home')->with(['roles' => $roles])->with(['role' => $role]);
+        $hitung = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->sum('setoran.pendapatan');
+        return view('home')->with(['roles' => $roles])->with(['role' => $role])->with(['hitung' => $hitung]);
     }
 
-    public function ListUser()
+    public function ListUserAdmin()
     {
-        $userrole = DB::table('users')
-                    ->whereNotIn('role_id', array(1))
-                    ->get();
-        $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
+        
         $users = DB::table('users')->get();
-        //admin
+
         return datatables()->of($users)
-            ->addColumn('action',function ($data){ //m
-             $button ='<a href="#">
-             <button class="btn btn-xs btn-primary " type="button">
-             <span class="btn-label"><i class="fa fa-file"></i></span>
-             </button>
-             </a>';
-             $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
-             $button.="&nbsp";
-            return $button;
-            })
-            ->rawColumns(['action'])->make(true);
-        //petugas
-        return datatables()->of($userrole)
-            ->addColumn('action',function ($data){ //m
-             $button ='<a href="#">
-             <button class="btn btn-xs btn-primary " type="button">
-             <span class="btn-label"><i class="fa fa-file"></i></span>
-             </button>
-             </a>';
-             $button.='<button class="btn btn-xs btn-danger" data-record-id="'.$data->id.'" data-record-title="The first one" data-toggle="modal" data-target="#confirm-delete"><span class="btn-label"><i class="fa fa-trash"></i></span></button>';
-             $button.="&nbsp";
+            ->addColumn('action',function ($users){ //m
+
+            $button ='<a href="users-edit/'.$users->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
+            $button.='<a href="delete-users/'.$users->id.'" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a> ';
+            $button.='<a href="users-lihat/'.$users->id.'"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>';
             return $button;
             })
             ->rawColumns(['action'])->make(true);
         
+    }
+
+    public function ListUserPetugas()
+    {
+       
+        $userrole = DB::table('users')
+                    ->whereNotIn('role_id', array(1))
+                    ->get();
+
+        return datatables()->of($userrole)
+            ->addColumn('action',function ($userrole){ //m
+
+            $button ='<a href="users-edit/'.$userrole->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
+            $button.='<a href="delete-users/'.$userrole->id.'" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a> ';
+            $button.='<a href="users/lihat/'.$userrole->id.'"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>';
+            return $button;
+            })
+            ->rawColumns(['action'])->make(true);
+        
+    }
+
+    public function ListUserSetor()
+    {
+        $store = Auth::user()->id;
+        $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
+
+        return datatables()->of($storeByUser)->make(true);
+        
+    }
+
+    public function ListSetorByUsers($id)
+    {   
+        $setoran = DB::table('setoran')
+                    ->where('penyetor', $id)->get();
+    
+        return datatables()->of($setoran)->make(true);
     }
 
 }
