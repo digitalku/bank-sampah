@@ -162,6 +162,8 @@
 <!-- Toastr -->
 <script src="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.js"></script>
 <!-- page script -->
+
+@yield('script')
 <script>
   $(function () {
     $("#example1").DataTable();

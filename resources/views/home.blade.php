@@ -63,7 +63,7 @@
               @if(Auth::user()->role_id == "1")
           <!-- /.card-header -->
           <div class="card-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
+            <table id="config-tableadmin" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th>Nama</th>
@@ -73,7 +73,7 @@
               </tr>
               </thead>
 
-              @foreach($users as $user)
+              {{--@foreach($users as $user)
               <tbody>
               <tr>
                 <td>{{ $user->name }}</td>
@@ -86,13 +86,13 @@
                 </td>
               </tr>
               </tbody>
-              @endforeach
+              @endforeach--}}
 
             </table>
           </div>
               @elseif(Auth::user()->role_id == "2")
           <div class="card-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
+            <table id="config-tablepetugas" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th>Nama</th>
@@ -102,7 +102,7 @@
               </tr>
               </thead>
 
-              @foreach($userrole as $userrole)
+              {{--@foreach($userrole as $userrole)
               <tbody>
               <tr>
                 <td>{{ $userrole->name }}</td>
@@ -115,13 +115,13 @@
                 </td>
               </tr>
               </tbody>
-              @endforeach
+              @endforeach--}}
             </table>
           </div>
               @else
           
           <div class="card-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-hover">
+            <table id="config-table-users" class="table table-bordered table-hover">
               <thead>
               <tr>
                 <th>Jenis Sampah</th>
@@ -131,24 +131,16 @@
               </tr>
               </thead>
 
-              @foreach($storeByUser as $sbu)
+              {{--@foreach($storeByUser as $sbu)
               <tbody>
               <tr>
                 <td>{{ $sbu->jenis }}</td>
                 <td>{{ $sbu->kiloan }} kg</td>
-                <td>
-                    @if($sbu->jenis=="withdrawal" && $sbu->approved==1)
-                      @currency($sbu->pendapatan) <span class="badge badge-success"> Withdraw Disetujui</span>
-                    @elseif($sbu->jenis=="withdrawal" && $sbu->approved==0)
-                      @currency($sbu->pendapatan) <span class="badge badge-secondary"> Withdraw Belum Disetujui</span>
-                    @else
-                      @currency($sbu->pendapatan)
-                    @endif
-                </td>
+                <td>@currency($sbu->pendapatan)</td>
                 <td>{{ $sbu->tanggal_setor }}</td>
               </tr>
               </tbody>
-              @endforeach
+              @endforeach--}}
               <tfoot>
                 <tr>
                   <th style="border-right: none;">Total Pendapatan</th>
@@ -249,4 +241,123 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <h3 class="heading text-danger">Konfirmasi</h3>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-exclamation-circle fa-4x mb-4"></i>
+
+        <p>Yakin Ingin Menghapus Data ini? Data yang telah terhapus tidak dapat dikembalikan lagi!</p>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">Hapus</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+<!-- /.modal -->
+@endsection
+
+@section('script')
+
+<script>
+
+     var id;
+
+     $(document).on('click', '.delete', function(){
+      id = $(this).attr('id');
+      $('#confirmModal').modal('show');
+     });
+
+     $('#ok_button').click(function(){
+      $.ajax({
+       url:"delete/users/"+id
+      }).then()
+        $('#confirmModal').modal('hide');
+        $('#config-tablepetugas').DataTable().ajax.reload();
+     });
+    $(document).ready(function() {
+        $('#exp_date').hide();
+        $('#labelexp').hide();
+        $("#cb_expdate").change(function(){
+            if($(this).is(':checked')){
+                $('#exp_date').show();
+                $('#labelexp').show();
+            }else{
+                $('#exp_date').hide();
+                $('#labelexp').hide();
+            }
+        });
+    });
+    $(document).ready(function() {
+        var i=0;
+        var table=$('#config-tableadmin').DataTable({
+            processing: true,
+            serverSide: true,
+            "ajax": "{{ route('list-users-admin') }}",
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'name', name: 'name'},
+              {data: 'alamat', name: 'alamat'},
+              {data: 'username', name: 'username'},
+              {data: 'action', name: 'action'},
+            ],
+        });
+    });
+    $(document).ready(function() {
+        var i=0;
+        var table=$('#config-tablepetugas').DataTable({
+            processing: true,
+            serverSide: true,
+            "ajax": "{{ route('list-users-petugas') }}",
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'name', name: 'name'},
+              {data: 'alamat', name: 'alamat'},
+              {data: 'username', name: 'username'},
+              {data: 'action', name: 'action'},
+            ],
+        });
+    });
+    $(document).ready(function() {
+        var i=0;
+        var table=$('#config-table-users').DataTable({
+            processing: true,
+            serverSide: true,
+            "ajax": "{{ route('list-setor-users') }}",
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'jenis', name: 'jenis'},
+              {data: 'kiloan', name: 'kiloan'},
+              {data: 'pendapatan', name: 'pendapatan'},
+              {data: 'tanggal_setor', name: 'tanggal_setor'},
+            ],
+        });
+    });
+</script>
 @endsection

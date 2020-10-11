@@ -84,7 +84,7 @@
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input name="password" type="text" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
+              <input name="password" type="password" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->

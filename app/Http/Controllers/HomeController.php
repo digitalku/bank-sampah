@@ -123,7 +123,7 @@ class HomeController extends Controller
             Mail::to($request->penerima)->send(new Approved([
                 'pesan' => $request->pesan
             ]));
-        }catch (Exception $e){
+        }catch (\Swift_TransportException $e){
             return response (['status' => false,'errors' => $e->getMessage()]);
         }
 
@@ -200,7 +200,7 @@ class HomeController extends Controller
             'rekening' => $request->rekening
         ]);
         // alihkan halaman edit ke halaman books
-        return redirect()->back()->with('status', 'Data User Berhasil diubah');
+        return redirect()->route('home')->with('status', 'Data User Berhasil diubah');
     }
 
     public function storeUsers(Request $request)

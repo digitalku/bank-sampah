@@ -64,11 +64,17 @@
                 <td>{{ $setor->kiloan }} kg</td>
                 <td>@currency( $setor->pendapatan )</td>
                 <td>{{ $setor->tanggal_setor }}</td>
-                <td>{{ $setor->name }}</td>
-                <!-- <td>
+                <td>
+                  @if($setor->name==null)
+                    <p class="text-danger">User Tidak Terdaftar</p>
+                  @else
+                  {{ $setor->name }}
+                  @endif
+                </td>
+                {{-- <td>
                     <a href="{{ route('setor-edit', $setor->id)}}"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a>
                     <a href="delete-setor/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
-                </td> -->
+                </td> --}}
               </tr>
               @endforeach
               </tbody>

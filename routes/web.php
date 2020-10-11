@@ -24,7 +24,13 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware('auth')->group(function () {
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/home', 'UserController@index')->name('home');
+	Route::get('/list-users-admin', 'UserController@ListUserAdmin')->name('list-users-admin');
+	Route::get('/list-users-petugas', 'UserController@ListUserPetugas')->name('list-users-petugas');
+	Route::get('/list-setor-users', 'UserController@ListUserSetor')->name('list-setor-users');
+	Route::get('/list-setor-byusers/{id}', 'UserController@ListSetorByUsers')->name('list-setor-byusers');
+	Route::get('delete/users/{id}', 'UserController@destroy')->name('delete-users');
+	// Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/setor/edit/{id}', 'HomeController@editSetor')->name('setor-edit');
 	Route::post('/setorr/update', 'HomeController@updateSetorr')->name('setorr-update');
 	Route::post('/setor/update', 'HomeController@updateSetor')->name('setor-update');
