@@ -12,6 +12,8 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Withdrawal;
+use App\Mail\Approved;
+use App\WithdrawalTable;
 
 class HomeController extends Controller
 {
@@ -68,11 +70,24 @@ class HomeController extends Controller
         return view('lihat-user', ['users' => $users], ['setoran' => $setoran])->with(['jenis' => $jenis])->with(['setorann' => $setorann])->with(['usersi' => $usersi])->with(['setorani' => $setorani])->with(['hitung' => $hitung]);
     }
 
+
+    public function Withdrawall()
+    {   
+
+        $store = Auth::user()->id;  
+        $users = DB::table('users')->where('id', $store)->first();
+        return view('withdrawal')->with(['users' => $users]);
+    }
+
     public function Withdrawal(Request $request)
     {   
+        $role = DB::table('users')->where('role_id', '2')
+                ->select('email')
+                ->get();
         try{
-            Mail::to($request->penerima)->send(new Withdrawal([
-                'pesan' => $request->pesan
+            Mail::to($role)->send(new Withdrawal([
+                'pendapatan' => $request->pendapatan,
+                'name' => $request->name
             ]));
         }catch (Exception $e){
             return response (['status' => false,'errors' => $e->getMessage()]);
@@ -92,7 +107,36 @@ class HomeController extends Controller
             'penyetor' => $request->penyetor,
         ]);
 
-        return redirect()->back()->with('status', 'Withdrawal Berhasil');
+        $penarikan = $request->pendapatan;
+
+        DB::table('withdrawal')->insert([
+            'user_id' => $request->user_id,
+            'jumlah_penarikan' => $penarikan,
+        ]);
+
+        return redirect()->back()->with('status', 'Pengajuan Withdrawal Berhasil');
+    }
+
+    public function Approve(Request $request)
+    {
+        try{
+            Mail::to($request->penerima)->send(new Approved([
+                'pesan' => $request->pesan
+            ]));
+        }catch (Exception $e){
+            return response (['status' => false,'errors' => $e->getMessage()]);
+        }
+
+        $sampah = DB::table('setoran')
+            ->where('id', $request->id)
+            ->select('jenis', 'kiloan', 'penyetor')
+            ->first();
+
+        DB::table('setoran')
+            ->where('id', $request->id)
+            ->update(['approved' => 1]);
+
+        return redirect()->route("users-lihat", ["id" => $sampah->penyetor])->with('status', 'Withdrawal Berhasil di Approved');
     }
 
 

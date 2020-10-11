@@ -22,6 +22,12 @@
   <input type="hidden" name="id" value="">
 </form>
 
+<form id="approve" action="{{ route('approve') }}" method="POST" style="display: none">
+  @csrf
+  <input type="hidden" name="id" value="">
+  <input type="hidden" name="penerima" class="form-control" id="inlineFormInputGroup" placeholder="email" value="{{ $users->email }}">
+</form>
+
 
 <section class="content">
   <div class="container-fluid">
@@ -146,6 +152,10 @@
                 <td>
                   @if($setor->pendapatan==null)
                   <button class="btn btn-info hitung-pendapatan" type="button">Hitung Pendapatan </button>
+                  @elseif($setor->jenis=="withdrawal" && $setor->approved==null)
+                  @currency($setor->pendapatan) <button class="btn btn-warning approve" type="button"> Approve</button>
+                  @elseif($setor->jenis=="withdrawal" && $setor->approved==1)
+                  @currency($setor->pendapatan) <span class="badge badge-success"> Approved</span>
                   @else
                   @currency($setor->pendapatan)                
                   @endif

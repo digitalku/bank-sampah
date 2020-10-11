@@ -266,6 +266,25 @@ $('.delete-confirm').on('click', function (event) {
 
 <script>
     $(document).ready(function () {
+        var elButtons = $("#datatables-sampah .approve");
+        var elFormSetSetoran = $("#approve");
+
+        if (!elButtons || !elFormSetSetoran) return;
+
+        elButtons.click(function() {
+          var id = $(this).closest("tr").data('id');
+          if (!id) return;
+
+          var elInputName = elFormSetSetoran.find("input[name='id']");
+          elInputName.val(id);
+          elFormSetSetoran.submit();
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
         var elButtons = $("#datatables-sampah .withdrawal");
         var elFormSetSetoran = $("#set-withdraw");
 

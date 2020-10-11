@@ -136,7 +136,15 @@
               <tr>
                 <td>{{ $sbu->jenis }}</td>
                 <td>{{ $sbu->kiloan }} kg</td>
-                <td>@currency($sbu->pendapatan)</td>
+                <td>
+                    @if($sbu->jenis=="withdrawal" && $sbu->approved==1)
+                      @currency($sbu->pendapatan) <span class="badge badge-success"> Withdraw Disetujui</span>
+                    @elseif($sbu->jenis=="withdrawal" && $sbu->approved==0)
+                      @currency($sbu->pendapatan) <span class="badge badge-secondary"> Withdraw Belum Disetujui</span>
+                    @else
+                      @currency($sbu->pendapatan)
+                    @endif
+                </td>
                 <td>{{ $sbu->tanggal_setor }}</td>
               </tr>
               </tbody>

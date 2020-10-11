@@ -97,7 +97,15 @@
             <a href="{{ route('ubah-password') }}" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
-                Ubah Password
+                Ubah Profil
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('withdrawal') }}" class="nav-link">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p>
+                Withdrawal
               </p>
             </a>
           </li>

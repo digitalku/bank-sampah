@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
 	Route::get('/tentang-kami', 'HomeController@tentangKami')->name('tentang-kami');
 	Route::post('/set-setoran', 'HomeController@setSetoran')->name('set-setoran');
+	Route::post('/approve', 'HomeController@Approve')->name('approve');
+	Route::get('/withdrawal', 'HomeController@Withdrawall')->name('withdrawal');
 	Route::post('/set-witdraw', 'HomeController@Withdrawal')->name('set-withdrawal');
 
 	Route::get('/ubah-password', 'HomeController@UbahPassword')->name('ubah-password');
