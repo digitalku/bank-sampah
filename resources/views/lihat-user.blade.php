@@ -302,7 +302,7 @@ https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
 
         setoran = $("#id").val()
         var i=0;
-        var table=$('.table-hover').DataTable({
+        var table = $('#datatables-sampah').DataTable({
             dom: "<'row'<'col-sm-2'l><'col-sm-6'B><'col-sm-4'f>>" +
               "<'row'<'col-sm-12'tr>>" +
               "<'row'<'col-sm-5'i><'col-sm-7'p>>",
@@ -325,6 +325,32 @@ https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
               {data: 'pendapatan', name: 'pendapatan'},
             ],
         });
+
+        $('#datatables-sampah tbody').on('click', 'td .hitung-pendapatan', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row( tr ).data();
+            
+            var elFormSetSetoran = $("#set-setoran");
+
+            if (!data.id && !elFormSetSetoran) return;
+
+            var elInputName = elFormSetSetoran.find("input[name='id']");
+            elInputName.val(data.id);
+            elFormSetSetoran.submit();
+        } );
+
+        $('#datatables-sampah tbody').on('click', 'td .approve', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row( tr ).data();
+            
+            var elFormSetSetoran = $("#approve");
+
+            if (!data.id && !elFormSetSetoran) return;
+
+            var elInputName = elFormSetSetoran.find("input[name='id']");
+            elInputName.val(data.id);
+            elFormSetSetoran.submit();
+        } );
     });
 </script>
 @endsection
