@@ -49,12 +49,13 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
 
   <!-- Toastr -->
   <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.css">
   
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="{{URL::asset('tempAdmin')}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <style type="text/css">
     .bg-icon{
       background-color: #039b4e;
@@ -157,11 +158,13 @@
 <!-- DataTables -->
 <script src="{{URL::asset('tempAdmin')}}/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{URL::asset('tempAdmin')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
 <!-- Select2 -->
 <script src="{{URL::asset('tempAdmin')}}/plugins/select2/js/select2.full.min.js"></script>
 <!-- Toastr -->
 <script src="{{URL::asset('tempAdmin')}}/plugins/toastr/toastr.min.js"></script>
 <!-- page script -->
+
 
 @yield('script')
 <script>

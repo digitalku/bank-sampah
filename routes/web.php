@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 	Route::get('/users/lihat/delete-setoruser/{id}', 'HomeController@deleteSetorUser')->name('delete-setoruser');
 	Route::post('/users/lihat/update', 'HomeController@updatePendapatan')->name('pendapatan-update');
 	Route::get('/sampah', 'HomeController@sampah')->name('sampah');
+	Route::get('/list-sampah', 'UserController@ListSampah')->name('list-sampah');
 	Route::get('/users/lihat/{id}', 'HomeController@lihatUser')->name('users-lihat');
 	Route::get('/users/edit/{id}', 'HomeController@editUser')->name('users-edit');
 	Route::post('/users/update', 'HomeController@updateUsers')->name('users-update');

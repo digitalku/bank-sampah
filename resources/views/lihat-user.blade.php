@@ -140,12 +140,12 @@
               <tr>
                 <th>Jenis Sampah</th>
                 <th>Kiloan</th>
-                <th>Pendapatan</th>
                 <th>Tanggal Setor</th>
+                <th>Pendapatan</th>
               </tr>
               </thead>
               <tbody>
-              @foreach($setoran as $setor)
+              {{--@foreach($setoran as $setor)
               <tr data-id="{{ $setor->id }}">
                 <td>{{ $setor->jenis }}</td>
                 <td>{{ $setor->kiloan }} kg</td>
@@ -167,7 +167,7 @@
                     <a href="delete-setoruser/{{$setor->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td> -->
               </tr>
-              @endforeach
+              @endforeach--}}
               </tbody>
             </table>
           </div>
@@ -285,4 +285,46 @@
 
 
 
+@endsection
+
+@section('script')
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="
+https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+
+        setoran = $("#id").val()
+        var i=0;
+        var table=$('.table-hover').DataTable({
+            dom: "<'row'<'col-sm-2'l><'col-sm-6'B><'col-sm-4'f>>" +
+              "<'row'<'col-sm-12'tr>>" +
+              "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            buttons: [
+                { extend: 'excel', className: 'btn btn-primary btn-xs mb-3' },
+                { extend: 'pdf', className: 'btn btn-primary btn-xs mb-3' },
+                { extend: 'print', className: 'btn btn-primary btn-xs mb-3' }
+            ],
+            processing: true,
+            serverSide: true,
+             "ajax": "/list-setor-byusers/" + setoran,
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'jenis', name: 'jenis'},
+              {data: 'kiloan', name: 'kiloan'},
+              {data: 'tanggal_setor', name: 'tanggal_setor'},
+              {data: 'pendapatan', name: 'pendapatan'},
+            ],
+        });
+    });
+</script>
 @endsection
