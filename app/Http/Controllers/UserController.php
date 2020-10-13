@@ -73,7 +73,11 @@ class UserController extends Controller
         $store = Auth::user()->id;
         $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
 
-        return datatables()->of($storeByUser)->make(true);
+        return datatables()->of($storeByUser)
+                ->addColumn('pendapatan', function($storeByUser){
+                    return 'Rp. '. number_format($storeByUser->pendapatan, 0, ',', '.');
+                })
+                ->make(true);
         
     }
 

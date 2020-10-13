@@ -5,12 +5,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Ubah Rekening dan Password</h1>
+        <h1 class="m-0 text-dark">Ubah Profil</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Ubah Rekening dan Password</li>
+          <li class="breadcrumb-item active">Ubah Profil</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -37,12 +37,15 @@
                     @endif
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
-              <input name="name" type="hidden" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
+              <label for="name">Nama</label>
+              <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <input name="username" type="hidden" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
+              <label for="username">Username</label>
+              <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
             </div>
-            <div class="form-group" style="display: none;">
+            <div class="form-group">
+              <label for="alamat">Alamat</label>
               <textarea name="alamat" class="form-control">{{ $users->alamat}}</textarea>
             </div>
             <div class="form-group" style="display: none;">
@@ -71,7 +74,8 @@
               </select>
             </div>
             <div class="form-group">
-              <input name="email" type="hidden" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
+              <label for="email">Email</label>
+              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening</label>
