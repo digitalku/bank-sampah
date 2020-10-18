@@ -37,20 +37,23 @@
                     </div>
                     @endif
             <div class="form-group">
+              <h6 style="font-size: 15px;">Keterangan : Tanda <span class="text-danger">*</span> Wajib diisi</h6>
+            </div>
+            <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
-              <label for="name">Nama</label>
+              <label for="name">Nama <span class="text-danger">*</span></label>
               <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="username">Username</label>
+              <label for="username">Username <span class="text-danger">*</span></label>
               <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="alamat">Alamat</label>
+              <label for="alamat">Alamat <span class="text-danger">*</span></label>
               <textarea name="alamat" class="form-control">{{ $users->alamat}}</textarea>
             </div>
             <div class="form-group">
-              <label>Hak Akses Sebagai</label>
+              <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
               <select name="role_id" class="form-control">
                 <option value="">Pilih</option>
                 @auth
@@ -75,16 +78,17 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Email <span class="text-danger">*</span></label>
               <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="rekening">Nomor Rekening</label>
-              <input name="rekening" type="number" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
+              <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
+              <input name="rekening" type="text" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password">Password <span class="text-danger">*</span></label>
               <input name="password" type="password" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
+              <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
             </div>
           </div>
           <!-- /.card-body -->
@@ -103,4 +107,19 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+@endsection
+
+@section('script')
+<script>
+  $(".toggle-password").click(function() {
+
+      $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+    });
+</script>
 @endsection

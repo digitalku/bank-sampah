@@ -91,6 +91,13 @@
       flex: 0 0;
       padding-bottom: 20px;
     }
+    .field-icon {
+      float: right;
+      margin-right: 10px;
+      margin-top: -25px;
+      position: relative;
+      z-index: 2;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

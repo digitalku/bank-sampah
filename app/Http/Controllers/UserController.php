@@ -34,9 +34,9 @@ class UserController extends Controller
         return datatables()->of($users)
             ->addColumn('action',function ($users){ //m
 
-            $button ='<a href="users-edit/'.$users->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
-            $button.='<a href="delete-users/'.$users->id.'" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a> ';
-            $button.='<a href="users-lihat/'.$users->id.'"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>';
+            $button ='<a href="users/edit/'.$users->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
+            $button.='<button type="button" name="delete" id="'.$users->id.'" class="delete btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</span></button> ';
+            $button.='<a href="users/lihat/'.$users->id.'"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>';
             return $button;
             })
             ->rawColumns(['action'])->make(true);
@@ -138,6 +138,30 @@ class UserController extends Controller
             })
             ->rawColumns(['pendapatan'])
             ->make(true);
+    }
+
+    public function Category()
+    {
+        return view('category');
+    }
+
+    public function ListCategory()
+    {
+        
+        $category = DB::table('kategori')
+                    ->where('jenis', '!=', 'withdrawal')
+                    ->get();
+        return datatables()->of($category)
+            ->addColumn('action',function ($category){ //m
+
+            $button ='<a href="edit-category/'.$category->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
+            $button.='<button type="button" name="delete" id="'.$category->id.'" class="delete btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</span></button> ';
+            return $button;
+            })
+            ->addColumn('harga', function($category){
+                return 'Rp. '. number_format($category->harga, 0, ',', '.');
+            })
+            ->rawColumns(['action', 'harga'])->make(true);
     }
 
 }

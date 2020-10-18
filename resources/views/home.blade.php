@@ -187,19 +187,22 @@
           {{ csrf_field() }}
           <div class="card-body">
             <div class="form-group">
-              <label for="name">Nama</label>
-              <input name="name" type="text" class="form-control" id="name" autocomplete="off">
+              <h6 style="font-size: 15px;">Keterangan : Tanda <span class="text-danger">*</span> Wajib diisi</h6>
             </div>
             <div class="form-group">
-              <label for="username">Username</label>
-              <input name="username" type="text" class="form-control" id="username" autocomplete="off">
+              <label for="name">Nama <span class="text-danger">*</span></label>
+              <input name="name" type="text" class="form-control" id="name" autocomplete="off" required>
             </div>
             <div class="form-group">
-              <label for="alamat">Alamat</label>
-              <textarea name="alamat" class="form-control"></textarea>
+              <label for="username">Username <span class="text-danger">*</span></label>
+              <input name="username" type="text" class="form-control" id="username" autocomplete="off" required>
             </div>
             <div class="form-group">
-              <label>Hak Akses Sebagai</label>
+              <label for="alamat">Alamat <span class="text-danger">*</span></label>
+              <textarea name="alamat" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+              <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
               <select name="role_id" class="form-control">
                 <option value="">Pilih</option>
                 @auth
@@ -216,22 +219,23 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input name="email" type="email" class="form-control" id="email" autocomplete="off">
+              <label for="email">Email <span class="text-danger">*</span></label>
+              <input name="email" type="email" class="form-control" id="email" autocomplete="off" required>
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
-              <input name="password" type="password" class="form-control" id="password" autocomplete="off">
+              <label for="password">Password <span class="text-danger">*</span></label>
+              <input name="password" type="password" class="form-control" id="password" autocomplete="off" required>
+              <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
             </div>
             <div class="form-group">
-              <label for="rekening">Nomor Rekening</label>
-              <input name="rekening" type="number" class="form-control" id="rekening" autocomplete="off">
+              <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
+              <input name="rekening" type="text" class="form-control" id="rekening" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success bg-icon">Submit</button>
+            <button type="submit" class="btn btn-success bg-icon">Tambah</button>
           </div>
         </form>
       </div>
@@ -291,6 +295,7 @@
       }).then()
         $('#confirmModal').modal('hide');
         $('#config-tablepetugas').DataTable().ajax.reload();
+        $('#config-tableadmin').DataTable().ajax.reload();
      });
     $(document).ready(function() {
         $('#exp_date').hide();
@@ -358,6 +363,16 @@
               {data: 'tanggal_setor', name: 'tanggal_setor'},
             ],
         });
+    });
+    $(".toggle-password").click(function() {
+
+      $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
     });
 </script>
 @endsection

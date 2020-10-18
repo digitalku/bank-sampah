@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function () {
 	Route::post('/users/update', 'HomeController@updateUsers')->name('users-update');
 	Route::post('/store-user', 'HomeController@storeUsers')->name('store-user');
 	Route::get('/delete-user/{id}', 'HomeController@deleteUser')->name('delete-user');
-	Route::get('/category', 'HomeController@createData')->name('category');
+	Route::get('/category', 'UserController@Category')->name('category');
+	Route::get('/list-category', 'UserController@ListCategory')->name('list-category');
 	Route::post('/store-category', 'HomeController@storeCategory')->name('store-category');
 	Route::post('/store', 'HomeController@store')->name('store');
 	Route::post('/users/lihat/store', 'HomeController@storeWithUser')->name('storeWithUser');

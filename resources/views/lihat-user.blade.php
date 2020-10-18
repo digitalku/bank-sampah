@@ -119,9 +119,9 @@
                       <div class="col-md-4">
                       </div>
                       <div class="col-md-2">
-                        <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
+                        <!-- <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lg">
                           Withdrawal
-                      </button>
+                      </button> -->
                       </div>
                      <div class="col-md-2">
                         <button type="button" class="btn btn-success bg-icon" data-toggle="modal" data-target="#modal-lgi">
@@ -205,7 +205,7 @@
           <div class="card-body">
             <div class="form-group">
               <label>Jenis Sampah</label>
-              <select name="jenis" class="form-control">
+              <select name="jenis" class="form-control" required>
                 <option value="">Pilih Jenis Sampah</option>
                 @foreach($jenis as $data)
                 <option value="{{ $data->jenis }}">{{ $data->jenis }}</option>
@@ -214,7 +214,7 @@
             </div>
             <div class="form-group">
               <label for="kiloan">Kiloan</label>
-              <input name="kiloan" type="text" class="form-control" id="kiloan" autocomplete="off">
+              <input name="kiloan" type="text" class="form-control" id="kiloan" autocomplete="off" required>
             </div>
             <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $users->id}}">
             <input class="form-control" type="hidden" name="tanggal_setor" id="tanggal_setor">

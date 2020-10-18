@@ -40,7 +40,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body" style="overflow: auto;">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="table-category" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>ID</th>
@@ -50,7 +50,7 @@
                 <th>Action</th>
               </tr>
               </thead>
-              @foreach($category as $kategori)
+              {{--@foreach($category as $kategori)
               <tr>
                 <td>{{ $kategori->id }}</td>
                 <td>{{ $kategori->jenis }}</td>
@@ -61,7 +61,7 @@
                     <a href="delete-category/{{$kategori->id}}" class="button delete-confirm"><button class="btn btn-xs btn-danger bg-bhy" type="button"><span class="btn-label"><i class="fa fa-trash"></i> Hapus</span></button></a>
                 </td>
               </tr>
-              @endforeach
+              @endforeach--}}
               </tbody>
             </table>
           </div>
@@ -120,4 +120,92 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <h3 class="heading text-danger">Konfirmasi</h3>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-exclamation-circle fa-4x mb-4"></i>
+
+        <p>Yakin Ingin Menghapus Data ini? Data yang telah terhapus tidak dapat dikembalikan lagi!</p>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">Hapus</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
 @endsection
+
+@section('script')
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="
+https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+
+<script>
+
+     var id;
+
+     $(document).on('click', '.delete', function(){
+      id = $(this).attr('id');
+      $('#confirmModal').modal('show');
+     });
+
+     $('#ok_button').click(function(){
+      $.ajax({
+       url:"delete-category/"+id
+      }).then()
+        $('#confirmModal').modal('hide');
+        $('#table-category').DataTable().ajax.reload();
+     });
+
+    $(document).ready(function() {
+
+        setoran = $("#id").val()
+        var i=0;
+        var table = $('#table-category').DataTable({
+            dom: "<'row'<'col-sm-2'l><'col-sm-6'B><'col-sm-4'f>>" +
+              "<'row'<'col-sm-12'tr>>" +
+              "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            buttons: [
+                { extend: 'excel', className: 'btn btn-primary btn-xs mb-3' },
+                { extend: 'pdf', className: 'btn btn-primary btn-xs mb-3' },
+                { extend: 'print', className: 'btn btn-primary btn-xs mb-3' }
+            ],
+            processing: true,
+            serverSide: true,
+             "ajax": "/list-category/",
+            columnDefs: [{
+                targets: [0, 1, 2],
+                className: 'mdl-data-table__cell--non-numeric'
+            }],
+            columns: [
+              {data: 'id', name: 'id'},
+              {data: 'jenis', name: 'jenis'},
+              {data: 'harga', name: 'harga'},
+              {data: 'tanggal_buat', name: 'tanggal_buat'},
+              {data: 'action', name: 'action'},
+            ],
+        });
+    });
+</script>
+@endsection
+

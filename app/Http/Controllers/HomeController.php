@@ -81,7 +81,7 @@ class HomeController extends Controller
 
     public function Withdrawal(Request $request)
     {   
-        $role = DB::table('users')->where('role_id', '2')
+        $role = DB::table('users')->where('id', '2')
                 ->select('email')
                 ->get();
         try{
@@ -386,7 +386,7 @@ class HomeController extends Controller
             'tanggal_buat' => $request->tanggal_buat
         ]);
 
-        return redirect('category');
+        return redirect('category')->with('status', 'Data Kategori Berhasil Ditambahkan');
      
     }
 
