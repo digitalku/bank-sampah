@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Withdrawal;
 use App\Mail\Approved;
+use Validator;
 use App\WithdrawalTable;
 
 class HomeController extends Controller
@@ -117,7 +118,7 @@ class HomeController extends Controller
             'jumlah_penarikan' => $penarikan,
         ]);
 
-        return redirect()->back()->with('status', 'Pengajuan Withdrawal Berhasil');
+        return redirect()->back()->with('status', 'Pengajuan Withdrawal Berhasil dilakukan, dana akan dikirimkan ke rekening user paling lambat 24 jam');
     }
 
     public function Approve(Request $request)
@@ -187,7 +188,7 @@ class HomeController extends Controller
             'role_id' => 'required',
             'alamat' => 'required',
             'username' => 'required',
-            'email' => 'required',
+            'email' => 'nullable',
             'rekening' => 'nullable'
         ];
 
@@ -216,15 +217,39 @@ class HomeController extends Controller
 
     public function storeUsers(Request $request)
     {
-        DB::table('users')->insert([
-            'name' => $request->name,
-            'role_id' => $request->role_id,
-            'alamat' => $request->alamat,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'rekening' => $request->rekening
-        ]);
+
+        $request->validate([
+
+            'name' => 'required',
+            'username' => 'required|unique:users,username',
+            'role_id' => 'required',
+            'alamat' => 'required',
+            'email' => 'nullable',
+            'password' => 'required',
+            'rekening' => 'nullable'
+
+            ]);
+
+
+
+        $input = $request->all();
+
+        $input['password'] = bcrypt($input['password']);
+        if ($input->fails()) {
+            return redirect()->back()->with('status', 'Username sudah dipakai');
+        }
+
+        User::create($input);
+
+        // DB::table('users')->insert([
+        //     'name' => $request->name,
+        //     'role_id' => $request->role_id,
+        //     'alamat' => $request->alamat,
+        //     'username' => $request->username,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'rekening' => $request->rekening
+        // ]);
 
         return redirect()->back()->with('status', 'Data User Berhasil Ditambahkan');
      
@@ -413,19 +438,18 @@ class HomeController extends Controller
 
     public function updateCategory(Request $request) 
     {
-        // untuk validasi form
+        
         $this->validate($request, [
             'jenis' => 'required',
             'harga' => 'required',
             'tanggal_buat' => 'required'
         ]);
-        // update data books
+        
         DB::table('kategori')->where('id', $request->id)->update([
             'jenis' => $request ->jenis,
             'harga' => $request->harga,
             'tanggal_buat' => $request->tanggal_buat
         ]);
-        // alihkan halaman edit ke halaman books
         return redirect('category')->with('status', 'Data Kategori Berhasil Diubah');
     }
 
@@ -442,6 +466,8 @@ class HomeController extends Controller
         return view('tentang-kami');
     }
 
+
+    // edit profile user
     public function UbahPassword()
     {
         
@@ -451,5 +477,19 @@ class HomeController extends Controller
                     ->get();
         $roles = DB::table('roles')->get();
         return view('ubah-password')->with(['users' => $users])->with(['role' => $role])->with(['roles' => $roles]);
+    }
+
+     // edit profile petugas
+    public function EditProfilePetugas()
+    {
+        
+        $store = Auth::user()->id;        
+        $users = DB::table('users')->where('id', $store)->first();
+        $role = DB::table('roles')->whereNotIn('id', array(1, 2))
+                    ->get();
+        $rolepetugas = DB::table('roles')->where('id', '2')
+                    ->get();
+        $roles = DB::table('roles')->get();
+        return view('ubah-password')->with(['users' => $users])->with(['role' => $role])->with(['roles' => $roles])->with(['rolepetugas' => $rolepetugas]);
     }
 }

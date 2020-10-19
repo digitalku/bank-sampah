@@ -93,14 +93,14 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="{{ route('ubah-password') }}" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Ubah Profil
               </p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="{{ route('withdrawal') }}" class="nav-link">
               <i class="nav-icon fas fa-dollar-sign"></i>

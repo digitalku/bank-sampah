@@ -29,7 +29,9 @@ class UserController extends Controller
     public function ListUserAdmin()
     {
         
-        $users = DB::table('users')->get();
+        $users = DB::table('users')
+                    ->whereNotIn('role_id', array(1))
+                    ->get();
 
         return datatables()->of($users)
             ->addColumn('action',function ($users){ //m

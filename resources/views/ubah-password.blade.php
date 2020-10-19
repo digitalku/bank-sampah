@@ -5,18 +5,19 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Ubah Profil</h1>
+        <h1 class="m-0 text-dark">Edit Data User</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Ubah Profil</li>
+          <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+          <li class="breadcrumb-item active">Edit Profil</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
- <!-- Main content -->
+
+
 <section class="content">
   <div class="container-fluid">
     <div class="row">
@@ -36,20 +37,23 @@
                     </div>
                     @endif
             <div class="form-group">
+              <h6 style="font-size: 15px;">Keterangan : Tanda <span class="text-danger">*</span> Wajib diisi</h6>
+            </div>
+            <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
-              <label for="name">Nama</label>
+              <label for="name">Nama <span class="text-danger">*</span></label>
               <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="username">Username</label>
+              <label for="username">Username <span class="text-danger">*</span></label>
               <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="alamat">Alamat</label>
+              <label for="alamat">Alamat <span class="text-danger">*</span></label>
               <textarea name="alamat" class="form-control">{{ $users->alamat}}</textarea>
             </div>
-            <div class="form-group" style="display: none;">
-              <label>Hak Akses Sebagai</label>
+            <div class="form-group">
+              <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
               <select name="role_id" class="form-control">
                 <option value="">Pilih</option>
                 @auth
@@ -59,6 +63,14 @@
                   <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
                   @else
                   <option value="{{ $data->id }}">{{ $data->name }}</option>
+                  @endif
+                @endforeach
+                @elseif(Auth::user()->role_id == "2")
+                @foreach($rolepetugas as $rolepetugas)
+                  @if($rolepetugas->id == $users->role_id)
+                  <option value="{{ $rolepetugas->id }}" selected>{{ $rolepetugas->name }}</option>
+                  @else
+                  <option value="{{ $rolepetugas->id }}">{{ $rolepetugas->name }}</option>
                   @endif
                 @endforeach
                 @else
@@ -74,22 +86,23 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Email <span class="text-danger">*</span></label>
               <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="rekening">Nomor Rekening</label>
-              <input name="rekening" type="number" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
+              <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
+              <input name="rekening" type="text" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
-              <input name="password" type="text" class="form-control" id="password" placeholder="masukkan password" autocomplete="off" required>
+              <label for="password">Ubah Password? <a onclick="showhidden()" class="text-info">Klik Disini</a></label>
+              <input name="password" type="password" class="form-control" id="password" placeholder="masukkan password baru" autocomplete="off" style="display: none;">
+              <span id="eye" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="display: none;"></span>
             </div>
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-success bg-icon">Update</button>
+            <button type="submit" class="btn btn-success bg-icon">Edit</button>
           </div>
         </form>
           </div>
@@ -102,5 +115,32 @@
   </div>
   <!-- /.container-fluid -->
 </section>
+@endsection
 
+@section('script')
+<script>
+  function showhidden() {
+    var x = document.getElementById("password");
+    var y = document.getElementById("eye");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+      y.style.display = "none";
+    } else {
+      x.style.display = "block";
+      y.style.display = "block";
+    }
+  }
+</script>
+<script>
+  $(".toggle-password").click(function() {
+
+      $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+    });
+</script>
 @endsection

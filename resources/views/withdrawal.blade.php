@@ -38,6 +38,9 @@
               {{ csrf_field() }}
               <div class="card-body">
                 <div class="form-group">
+                 <p>Jumlah yang dapat di Withdrawal : <label>@currency($hitung)</label></p>
+                </div>
+                <div class="form-group">
                   <input name="user_id" type="hidden" class="form-control" value="{{ auth()->user()->id }}" >
                   <input class="form-control" type="hidden" name="penyetor" id="penyetor" value="{{ $users->id}}">
                   <input type="hidden" name="name" class="form-control" value="{{ $users->name }}">

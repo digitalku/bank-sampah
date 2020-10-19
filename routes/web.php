@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
 	Route::post('/set-witdraw', 'HomeController@Withdrawal')->name('set-withdrawal');
 
 	Route::get('/ubah-password', 'HomeController@UbahPassword')->name('ubah-password');
+	Route::get('/edit-profile', 'HomeController@EditProfilePetugas')->name('edit-profile');
 
 
 	Route::get('/mail', 'PhpmailerController@Mail')->name('mail');

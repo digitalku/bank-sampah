@@ -54,26 +54,9 @@
             </div>
             <div class="form-group">
               <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
-              <select name="role_id" class="form-control">
+              <select name="role_id" class="form-control" required>
                 <option value="">Pilih</option>
-                @auth
-                @if(Auth::user()->role_id == "1")
-                @foreach($roles as $data)
-                  @if($data->id == $users->role_id)
-                  <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
-                  @else
-                  <option value="{{ $data->id }}">{{ $data->name }}</option>
-                  @endif
-                @endforeach
-                @elseif(Auth::user()->role_id == "2")
-                @foreach($rolepetugas as $rolepetugas)
-                  @if($rolepetugas->id == $users->role_id)
-                  <option value="{{ $rolepetugas->id }}" selected>{{ $rolepetugas->name }}</option>
-                  @else
-                  <option value="{{ $rolepetugas->id }}">{{ $rolepetugas->name }}</option>
-                  @endif
-                @endforeach
-                @else
+                
                 @foreach($role as $role)
                   @if($role->id == $users->role_id)
                   <option value="{{ $role->id }}" selected>{{ $role->name }}</option>
@@ -81,12 +64,10 @@
                   <option value="{{ $role->id }}">{{ $role->name }}</option>
                   @endif
                 @endforeach
-                @endif
-                @endauth
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email <span class="text-danger">*</span></label>
+              <label for="email">Email</label>
               <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
             </div>
             <div class="form-group">
@@ -94,7 +75,7 @@
               <input name="rekening" type="text" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
             </div>
             <div class="form-group">
-              <label for="password">Password <span class="text-danger">*</span></label>
+              <label for="password">Password</label>
               <input name="password" type="password" class="form-control" id="password" placeholder="masukkan password" autocomplete="off">
               <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
             </div>

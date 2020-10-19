@@ -21,7 +21,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-
         <div class="card">
           <div class="card-header">
             <div class="row">
@@ -165,6 +164,7 @@
 </section>
 
 
+
 <div class="modal fade" id="modal-lg">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -191,19 +191,24 @@
             </div>
             <div class="form-group">
               <label for="name">Nama <span class="text-danger">*</span></label>
-              <input name="name" type="text" class="form-control" id="name" autocomplete="off" required>
+              <input name="name" type="text" class="form-control" id="name" value="{{ old('name') }}" autocomplete="off" required>
             </div>
             <div class="form-group">
               <label for="username">Username <span class="text-danger">*</span></label>
-              <input name="username" type="text" class="form-control" id="username" autocomplete="off" required>
+              <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" autocomplete="off" value="{{ old('username') }}" required>
+              @error('username')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="alamat">Alamat <span class="text-danger">*</span></label>
-              <textarea name="alamat" class="form-control" required></textarea>
+              <textarea name="alamat" class="form-control" required>{{ old('alamat') }}</textarea>
             </div>
             <div class="form-group">
               <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
-              <select name="role_id" class="form-control">
+              <select name="role_id" class="form-control" required>
                 <option value="">Pilih</option>
                 @auth
                 @if(Auth::user()->role_id == "1")
@@ -219,8 +224,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email <span class="text-danger">*</span></label>
-              <input name="email" type="email" class="form-control" id="email" autocomplete="off" required>
+              <label for="email">Email </label>
+              <input value="{{ old('email') }}" name="email" type="email" class="form-control" id="email" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="password">Password <span class="text-danger">*</span></label>
@@ -229,7 +234,7 @@
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
-              <input name="rekening" type="text" class="form-control" id="rekening" autocomplete="off">
+              <input value="{{ old('rekening') }}" name="rekening" type="text" class="form-control" id="rekening" autocomplete="off">
             </div>
           </div>
           <!-- /.card-body -->
@@ -280,7 +285,14 @@
 
 @section('script')
 
+
 <script>
+    $(document).ready(function() {
+      var modalFeedback = $('#modal-lg .invalid-feedback');
+          if (modalFeedback.length) {
+            $('#modal-lg').modal('show')
+          }
+    })
 
      var id;
 
@@ -363,6 +375,7 @@
               {data: 'tanggal_setor', name: 'tanggal_setor'},
             ],
         });
+
     });
     $(".toggle-password").click(function() {
 
