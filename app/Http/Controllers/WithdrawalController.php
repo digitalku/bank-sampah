@@ -15,7 +15,10 @@ class WithdrawalController extends Controller
 		
         $store = Auth::user()->id;
         $storeByUser = DB::table('setoran')->where('penyetor', $store)->get();
-		return view('withdrawal')->with(['storeByUser'=> $storeByUser]);
+        $hitung = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->sum('setoran.pendapatan');
+		return view('withdrawal')->with(['storeByUser'=> $storeByUser])->with(['hitung' => $hitung]);
 	}
 
 	// $setoran = Setoran::where('id', $id_setoran)->first();

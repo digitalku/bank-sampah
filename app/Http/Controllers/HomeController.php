@@ -76,7 +76,10 @@ class HomeController extends Controller
 
         $store = Auth::user()->id;  
         $users = DB::table('users')->where('id', $store)->first();
-        return view('withdrawal')->with(['users' => $users]);
+        $hitung = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->sum('setoran.pendapatan');
+        return view('withdrawal')->with(['users' => $users])->with(['hitung' => $hitung]);
     }
 
     public function Withdrawal(Request $request)
@@ -178,27 +181,35 @@ class HomeController extends Controller
     }
 
     public function updateUsers(Request $request) 
-    {
-        // untuk validasi form
-        $this->validate($request, [
+    {   
+        $validations = [
             'name' => 'required',
             'role_id' => 'required',
             'alamat' => 'required',
             'username' => 'required',
             'email' => 'required',
-            'password' => 'required',
             'rekening' => 'nullable'
-        ]);
-        // update data books
-        DB::table('users')->where('id', $request->id)->update([
+        ];
+
+        // untuk validasi form
+        $this->validate($request, $validations);
+        
+        $updateData = [
             'name' => $request ->name,
             'role_id' => $request->role_id,
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
             'rekening' => $request->rekening
-        ]);
+        ];
+
+        // jika ada password, update passsword
+        if ($request->password) {
+            $updateData['password'] = Hash::make($request->password);
+        }
+
+        // update data books
+        DB::table('users')->where('id', $request->id)->update($updateData);
         // alihkan halaman edit ke halaman books
         return redirect()->route('home')->with('status', 'Data User Berhasil diubah');
     }
@@ -223,9 +234,11 @@ class HomeController extends Controller
     {
         $role = DB::table('roles')->whereNotIn('id', array(1, 2))
                     ->get();
+        $rolepetugas = DB::table('roles')->where('id', '2')
+                    ->get();
         $users = DB::table('users')->where('id',$id)->first();
         $roles = DB::table('roles')->get();
-        return view('edit-user', ['roles' => $roles], ['users' => $users])->with(['role' => $role]);
+        return view('edit-user', ['roles' => $roles], ['users' => $users])->with(['role' => $role])->with(['rolepetugas' => $rolepetugas]);
     }
 
     public function deleteUser($id)

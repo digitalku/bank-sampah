@@ -65,6 +65,14 @@
                   <option value="{{ $data->id }}">{{ $data->name }}</option>
                   @endif
                 @endforeach
+                @elseif(Auth::user()->role_id == "2")
+                @foreach($rolepetugas as $rolepetugas)
+                  @if($rolepetugas->id == $users->role_id)
+                  <option value="{{ $rolepetugas->id }}" selected>{{ $rolepetugas->name }}</option>
+                  @else
+                  <option value="{{ $rolepetugas->id }}">{{ $rolepetugas->name }}</option>
+                  @endif
+                @endforeach
                 @else
                 @foreach($role as $role)
                   @if($role->id == $users->role_id)

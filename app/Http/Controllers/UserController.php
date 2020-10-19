@@ -47,7 +47,7 @@ class UserController extends Controller
     {
        
         $userrole = DB::table('users')
-                    ->whereNotIn('role_id', array(1))
+                    ->whereNotIn('role_id', array(1, 2))
                     ->get();
 
         return datatables()->of($userrole)
