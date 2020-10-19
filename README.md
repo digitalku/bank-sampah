@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Tentang](#tentang)
-- [Instalaasi](#instalasi)
+- [Instalasi](#instalasi)
   - [Persyaratan server](#persyaratan-server)
   - [Unduh source code](#unduh-source-code)
   - [Konfigurasi](#konfigurasi)
