@@ -56,7 +56,7 @@ class UserController extends Controller
             ->addColumn('action',function ($userrole){ //m
 
             $button ='<a href="users/edit/'.$userrole->id.'"><button class="btn btn-xs btn-info bg-inf" type="button"><span class="btn-label"><i class="fa fa-edit"></i> Edit</span></button></a> ';
-            $button.='<button type="button" name="delete" id="'.$userrole->id.'" class="delete btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</span></button> ';
+            // $button.='<button type="button" name="delete" id="'.$userrole->id.'" class="delete btn btn-danger btn-xs"><i class="fa fa-trash"></i> Hapus</span></button> ';
             $button.='<a href="users/lihat/'.$userrole->id.'"><button class="btn btn-xs btn-warning bg-wrning" type="button"><span class="btn-label"><i class="fa fa-eye"></i> Lihat</span></button></a>';
             return $button;
             })

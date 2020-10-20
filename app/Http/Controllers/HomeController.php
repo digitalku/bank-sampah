@@ -15,6 +15,8 @@ use App\Mail\Withdrawal;
 use App\Mail\Approved;
 use Validator;
 use App\WithdrawalTable;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
@@ -123,13 +125,13 @@ class HomeController extends Controller
 
     public function Approve(Request $request)
     {
-        try{
-            Mail::to($request->penerima)->send(new Approved([
-                'pesan' => $request->pesan
-            ]));
-        }catch (\Swift_TransportException $e){
-            return response (['status' => false,'errors' => $e->getMessage()]);
-        }
+        // try{
+        //     Mail::to($request->penerima)->send(new Approved([
+        //         'pesan' => $request->pesan
+        //     ]));
+        // }catch (\Swift_TransportException $e){
+        //     return response (['status' => false,'errors' => $e->getMessage()]);
+        // }
 
         $sampah = DB::table('setoran')
             ->where('id', $request->id)
@@ -183,12 +185,13 @@ class HomeController extends Controller
 
     public function updateUsers(Request $request) 
     {   
+
         $validations = [
             'name' => 'required',
-            'role_id' => 'required',
             'alamat' => 'required',
-            'username' => 'required',
+            'username' => "required|unique:users,username,$request->id",
             'email' => 'nullable',
+            'role_id' => 'required',
             'rekening' => 'nullable'
         ];
 
@@ -235,9 +238,6 @@ class HomeController extends Controller
         $input = $request->all();
 
         $input['password'] = bcrypt($input['password']);
-        if ($input->fails()) {
-            return redirect()->back()->with('status', 'Username sudah dipakai');
-        }
 
         User::create($input);
 
@@ -261,9 +261,11 @@ class HomeController extends Controller
                     ->get();
         $rolepetugas = DB::table('roles')->where('id', '2')
                     ->get();
+        $whenpetugas = DB::table('roles')->whereNotIn('id', array(1, 2))
+        ->get();
         $users = DB::table('users')->where('id',$id)->first();
         $roles = DB::table('roles')->get();
-        return view('edit-user', ['roles' => $roles], ['users' => $users])->with(['role' => $role])->with(['rolepetugas' => $rolepetugas]);
+        return view('edit-user', ['roles' => $roles], ['users' => $users])->with(['role' => $role])->with(['rolepetugas' => $rolepetugas])->with(['whenpetugas' => $whenpetugas]);
     }
 
     public function deleteUser($id)

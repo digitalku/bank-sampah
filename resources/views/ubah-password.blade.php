@@ -42,19 +42,34 @@
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
               <label for="name">Nama <span class="text-danger">*</span></label>
-              <input name="name" type="text" class="form-control" id="name" value="{{ $users->name}}" autocomplete="off">
+              <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $users->name)}}" autocomplete="off">
+              @error('name')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="username">Username <span class="text-danger">*</span></label>
-              <input name="username" type="text" class="form-control" id="username" value="{{ $users->username}}" autocomplete="off">
+              <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username', $users->username)}}" autocomplete="off">
+              @error('username')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="alamat">Alamat <span class="text-danger">*</span></label>
-              <textarea name="alamat" class="form-control">{{ $users->alamat}}</textarea>
+              <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat', $users->alamat)}}</textarea>
+              @error('alamat')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label>Hak Akses Sebagai <span class="text-danger">*</span></label>
-              <select name="role_id" class="form-control">
+              <select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
                 <option value="">Pilih</option>
                 @auth
                 @if(Auth::user()->role_id == "1")
@@ -87,11 +102,11 @@
             </div>
             <div class="form-group">
               <label for="email">Email <span class="text-danger">*</span></label>
-              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
+              <input name="email" type="email" class="form-control" id="email" value="{{ old('email', $users->email) }}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
-              <input name="rekening" type="text" class="form-control" id="rekening" value="{{ $users->rekening }}" autocomplete="off">
+              <input name="rekening" type="text" class="form-control" id="rekening" value="{{ old('rekening', $users->rekening) }}" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="password">Ubah Password? <a onclick="showhidden()" class="text-info">Klik Disini</a></label>
