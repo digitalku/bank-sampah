@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKategoriTable extends Migration
+class AlterColumnEmail extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateKategoriTable extends Migration
      */
     public function up()
     {
-        Schema::create('kategori', function (Blueprint $table) {
-            $table->id();
-            $table->string('jenis');
-            $table->string('harga');
-            $table->dateTime('tanggal_buat');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropUnique(['email']);
         });
     }
 
@@ -28,6 +25,6 @@ class CreateKategoriTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori');
+        //
     }
 }

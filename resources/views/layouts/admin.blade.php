@@ -98,6 +98,30 @@
       position: relative;
       z-index: 2;
     }
+
+    .page-item.active .page-link {
+        z-index: 1;
+        color: #fff;
+        background-color: #218838;
+        border-color: #218838;
+    }
+    .page-link {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #218838;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+    }
+    .page-link:hover {
+        z-index: 2;
+        color: #218838;
+        text-decoration: none;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
