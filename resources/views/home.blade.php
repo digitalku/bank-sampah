@@ -238,9 +238,26 @@
                   </span>
               @enderror
             </div>
+            @auth
+            @if(Auth::user()->role_id == "1")
             <div class="form-group">
               <label for="email">Email </label>
               <input value="{{ old('email') }}" name="email" type="email" class="form-control" id="email" autocomplete="off">
+            </div>
+            @else
+            <div class="form-group">
+              <input value="{{ old('email') }}" name="email" type="hidden" class="form-control" id="email" autocomplete="off">
+            </div>
+            @endif
+            @endauth
+            <div class="form-group">
+              <label for="telepon">Nomor Telepon <span class="text-danger">*</span></label>
+              <input value="{{ old('telepon') }}" name="telepon" type="number" class="form-control @error('telepon') is-invalid @enderror" id="telepon" autocomplete="off">
+              @error('telepon')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="password">Password <span class="text-danger">*</span></label>

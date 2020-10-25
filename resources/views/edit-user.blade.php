@@ -101,8 +101,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input name="email" type="email" class="form-control" id="email" value="{{ $users->email }}" autocomplete="off">
+              <label for="telepon">Nomor Telepon</label>
+              <input name="telepon" type="number" class="form-control @error('telepon') is-invalid @enderror" id="telepon" value="{{ old('telepon', $users->telepon)}}" autocomplete="off">
+              @error('telepon')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>

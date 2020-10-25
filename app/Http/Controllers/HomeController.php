@@ -191,6 +191,7 @@ class HomeController extends Controller
             'alamat' => 'required',
             'username' => "required|unique:users,username,$request->id",
             'email' => 'nullable',
+            'telepon' => 'required|max:15',
             'role_id' => 'required',
             'rekening' => 'nullable'
         ];
@@ -204,6 +205,7 @@ class HomeController extends Controller
             'alamat' => $request->alamat,
             'username' => $request->username,
             'email' => $request->email,
+            'telepon' => $request->telepon,
             'rekening' => $request->rekening
         ];
 
@@ -224,10 +226,11 @@ class HomeController extends Controller
         $request->validate([
 
             'name' => 'required',
-            'username' => 'required|unique:users,username',
+            'username' => 'required|unique:users,username|alpha_dash',
             'role_id' => 'required',
             'alamat' => 'required',
             'email' => 'nullable',
+            'telepon' => 'required|max:15',
             'password' => 'required',
             'rekening' => 'nullable'
 

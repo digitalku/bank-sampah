@@ -39,6 +39,8 @@
             <div class="form-group">
               <h6 style="font-size: 15px;">Keterangan : Tanda <span class="text-danger">*</span> Wajib diisi</h6>
             </div>
+            @auth
+            @if(Auth::user()->role_id == "1")            
             <div class="form-group">
               <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
               <label for="name">Nama <span class="text-danger">*</span></label>
@@ -58,6 +60,39 @@
                   </span>
               @enderror
             </div>
+            @else
+            <div class="form-group">
+              <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
+              <!-- <label for="name">Nama <span class="text-danger">*</span></label> -->
+              <input name="name" type="hidden" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $users->name)}}" autocomplete="off">
+              @error('name')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <!-- <label for="username">Username <span class="text-danger">*</span></label> -->
+              <input name="username" type="hidden" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username', $users->username)}}" autocomplete="off">
+              @error('username')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="hidden" name="id" id="id" value="{{ $users->id}}">
+              <label for="name">Nama <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" value="{{ $users->name }}" autocomplete="off" disabled>
+            </div>
+            <div class="form-group">
+              <label for="username">Username <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="username" value="{{ $users->username }}" autocomplete="off" disabled>
+              
+            </div>
+            @endif
+            @endauth
+            
             <div class="form-group">
               <label for="alamat">Alamat <span class="text-danger">*</span></label>
               <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror">{{ old('alamat', $users->alamat)}}</textarea>
@@ -100,9 +135,31 @@
                 @endauth
               </select>
             </div>
+            @auth
+            @if(Auth::user()->role_id == "1")
             <div class="form-group">
-              <label for="email">Email <span class="text-danger">*</span></label>
+              <label for="email">Email <span class="text-danger"></span></label>
               <input name="email" type="email" class="form-control" id="email" value="{{ old('email', $users->email) }}" autocomplete="off">
+            </div>
+            @elseif(Auth::user()->role_id == "2")
+            <div class="form-group">
+              <label for="email">Email <span class="text-danger"></span></label>
+              <input name="email" type="email" class="form-control" id="email" value="{{ old('email', $users->email) }}" autocomplete="off">
+            </div>
+            @else
+            <div class="form-group">
+              <input name="email" type="hidden" class="form-control" id="email" value="{{ old('email', $users->email) }}" autocomplete="off">
+            </div>
+            @endif
+            @endauth
+            <div class="form-group">
+              <label for="telepon">Nomor Telepon <span class="text-danger">*</span></label>
+              <input name="telepon" type="number" class="form-control @error('telepon') is-invalid @enderror" id="telepon" value="{{ old('telepon', $users->telepon)}}" autocomplete="off">
+              @error('telepon')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
             </div>
             <div class="form-group">
               <label for="rekening">Nomor Rekening (contoh: bca#123456#agusrohma)</label>
