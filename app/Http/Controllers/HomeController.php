@@ -98,7 +98,7 @@ class HomeController extends Controller
         
         $penarikan = $request->pendapatan;
         if ($penarikan>$max) {
-            return redirect()->back()->with('error', 'Hello');
+            return redirect()->back()->with('error', 'Pengajuan Withdrawal gagal');
         } else {
                 $role = DB::table('users')->where('id', '2') //ini adalah user_id untuk menerima notif email withdrawal dari user
                     ->select('email')
@@ -480,7 +480,6 @@ class HomeController extends Controller
 
     public function tentangKami()
     {
-
         return view('tentang-kami');
     }
 
