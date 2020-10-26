@@ -82,45 +82,58 @@ class HomeController extends Controller
         $hitung = DB::table('setoran')
                     ->where('penyetor', $store)
                     ->sum('setoran.pendapatan');
-        return view('withdrawal')->with(['users' => $users])->with(['hitung' => $hitung]);
+        $max = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->value(DB::raw("SUM(pendapatan) - 10000"));
+        return view('withdrawal')->with(['users' => $users])->with(['hitung' => $hitung])->with(['max' => $max]);
     }
 
     public function Withdrawal(Request $request)
     {   
-        $role = DB::table('users')->where('id', '2')
-                ->select('email')
-                ->get();
-        try{
-            Mail::to($role)->send(new Withdrawal([
-                'pendapatan' => $request->pendapatan,
-                'name' => $request->name
-            ]));
-        }catch (Exception $e){
-            return response (['status' => false,'errors' => $e->getMessage()]);
-        }
 
-        $pendapatan = $request->pendapatan;
-        if (is_numeric($pendapatan)) {
-            $pendapatan = -$pendapatan;
-        }
-
-        DB::table('setoran')->insert([
-            'user_id' => $request->user_id,
-            'jenis' => 'withdrawal',
-            'kiloan' => 0,
-            'pendapatan' => $pendapatan,
-            'tanggal_setor' => Carbon::now()->toDateTimeString(),
-            'penyetor' => $request->penyetor,
-        ]);
-
+        $store = Auth::user()->id;  
+        $max = DB::table('setoran')
+                ->where('penyetor', $store)
+                ->value(DB::raw("SUM(pendapatan) - 10000"));
+        
         $penarikan = $request->pendapatan;
+        if ($penarikan>$max) {
+            return redirect()->back()->with('error', 'Hello');
+        } else {
+                $role = DB::table('users')->where('id', '2') //ini adalah user_id untuk menerima notif email withdrawal dari user
+                    ->select('email')
+                    ->get();
+            try{
+                Mail::to($role)->send(new Withdrawal([
+                    'pendapatan' => $request->pendapatan,
+                    'name' => $request->name
+                ]));
+            }catch (Exception $e){
+                return response (['status' => false,'errors' => $e->getMessage()]);
+            }
 
-        DB::table('withdrawal')->insert([
-            'user_id' => $request->user_id,
-            'jumlah_penarikan' => $penarikan,
-        ]);
+            $pendapatan = $request->pendapatan;
+            if (is_numeric($pendapatan)) {
+                $pendapatan = -$pendapatan;
+            }
+            DB::table('setoran')->insert([
+                'user_id' => $request->user_id,
+                'jenis' => 'withdrawal',
+                'kiloan' => 0,
+                'pendapatan' => $pendapatan,
+                'tanggal_setor' => Carbon::now()->toDateTimeString(),
+                'penyetor' => $request->penyetor,
+            ]);
 
-        return redirect()->back()->with('status', 'Pengajuan Withdrawal Berhasil dilakukan, dana akan dikirimkan ke rekening user paling lambat 24 jam');
+            DB::table('withdrawal')->insert([
+                'user_id' => $request->user_id,
+                'jumlah_penarikan' => $penarikan,
+            ]);
+
+            return redirect()->back()->with('status', 'Pengajuan Withdrawal Berhasil dilakukan, dana akan dikirimkan ke rekening user paling lambat 24 jam');
+
+
+        }
     }
 
     public function Approve(Request $request)
@@ -191,7 +204,7 @@ class HomeController extends Controller
             'alamat' => 'required',
             'username' => "required|unique:users,username,$request->id",
             'email' => 'nullable',
-            'telepon' => 'required|max:15',
+            'telepon' => 'nullable|max:15',
             'role_id' => 'required',
             'rekening' => 'nullable'
         ];
@@ -230,7 +243,7 @@ class HomeController extends Controller
             'role_id' => 'required',
             'alamat' => 'required',
             'email' => 'nullable',
-            'telepon' => 'required|max:15',
+            'telepon' => 'nullable|max:15',
             'password' => 'required',
             'rekening' => 'nullable'
 

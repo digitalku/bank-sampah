@@ -251,7 +251,7 @@
             @endif
             @endauth
             <div class="form-group">
-              <label for="telepon">Nomor Telepon <span class="text-danger">*</span></label>
+              <label for="telepon">Nomor Telepon</label>
               <input value="{{ old('telepon') }}" name="telepon" type="number" class="form-control @error('telepon') is-invalid @enderror" id="telepon" autocomplete="off">
               @error('telepon')
                   <span class="invalid-feedback" role="alert">

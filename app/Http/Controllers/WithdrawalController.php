@@ -18,7 +18,10 @@ class WithdrawalController extends Controller
         $hitung = DB::table('setoran')
                     ->where('penyetor', $store)
                     ->sum('setoran.pendapatan');
-		return view('withdrawal')->with(['storeByUser'=> $storeByUser])->with(['hitung' => $hitung]);
+        $max = DB::table('setoran')
+                    ->where('penyetor', $store)
+                    ->sum('setoran.pendapatan' - 10000);
+		return view('withdrawal')->with(['storeByUser'=> $storeByUser])->with(['hitung' => $hitung])->with(['max' => $max]);
 	}
 
 	// $setoran = Setoran::where('id', $id_setoran)->first();
